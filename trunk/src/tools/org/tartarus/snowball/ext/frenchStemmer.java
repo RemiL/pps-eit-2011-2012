@@ -187,14 +187,7 @@ public class frenchStemmer extends tools.org.tartarus.snowball.SnowballStemmer {
         private int I_p1;
         private int I_pV;
 
-        private void copy_from(frenchStemmer other) {
-            I_p2 = other.I_p2;
-            I_p1 = other.I_p1;
-            I_pV = other.I_pV;
-            super.copy_from(other);
-        }
-
-        private boolean r_prelude() {
+		private boolean r_prelude() {
             int v_1;
             int v_2;
             int v_3;
