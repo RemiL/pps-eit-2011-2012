@@ -1,6 +1,7 @@
 package index;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class IndexHash extends Index {
 
@@ -54,5 +55,15 @@ public class IndexHash extends Index {
 	@Override
 	public void setPoids(String terme, String urlDocument, double poids) {
 		index.get(terme).get(urlDocument).setPoids(poids);
+	}
+
+	@Override
+	public Set<String> getDocumentsTerme(String terme) {
+		return index.get(terme).keySet();
+	}
+
+	@Override
+	public Set<String> getTermesIndex() {
+		return index.keySet();
 	}
 }

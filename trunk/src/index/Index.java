@@ -1,6 +1,7 @@
 package index;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public abstract class Index {
 	
@@ -66,4 +67,16 @@ public abstract class Index {
 	 * @return le poids d'un terme dans un document
 	 */
 	public abstract double getPoids(String terme, String urlDocument);
+	
+	/**
+	 * Returne un set des termes de l'index
+	 * @return un set des termes de l'index
+	 */
+	public abstract Set<String> getTermesIndex();
+	
+	/**
+	 * Returne un set des documents de l'index
+	 * @return un set des documents de l'index
+	 */
+	public abstract Set<String> getDocumentsTerme(String terme);
 }
