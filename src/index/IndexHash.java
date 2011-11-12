@@ -3,15 +3,17 @@ package index;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Un index sous forme de table de hashage
+ */
 public class IndexHash extends Index {
 
 	HashMap<String, HashMap<String, CoupleOccurrencePoids>> index;
-	
+
 	/**
 	 * Construit un index vide
 	 */
-	public IndexHash()
-	{
+	public IndexHash() {
 		super();
 		index = new HashMap<String, HashMap<String, CoupleOccurrencePoids>>();
 	}
@@ -23,18 +25,18 @@ public class IndexHash extends Index {
 
 	@Override
 	public void addDocumentTerme(String terme, Document document) {
-		
-		if(!index.containsKey(terme))
+
+		if (!index.containsKey(terme))
 			addTerme(terme);
-		if(!listeDocuments.containsKey(document.getUrl()))
+		if (!listeDocuments.containsKey(document.getUrl()))
 			addDocument(document);
-			
+
 		HashMap<String, CoupleOccurrencePoids> liste = index.get(terme);
-			
-		if(liste.containsKey(document.getUrl()))
+
+		if (liste.containsKey(document.getUrl()))
 			liste.get(document.getUrl()).setNbOccurrences(liste.get(document.getUrl()).getNbOccurrences() + 1);
 		else
-			liste.put(document.getUrl(), new CoupleOccurrencePoids(1, 0));		
+			liste.put(document.getUrl(), new CoupleOccurrencePoids(1, 0));
 	}
 
 	@Override
