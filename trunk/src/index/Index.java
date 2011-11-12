@@ -41,8 +41,9 @@ public abstract class Index {
 	 * Modifie le poids d'un terme d'un document
 	 * @param terme le terme
 	 * @param urlDocument l'url du document
+	 * @param poids le poids du terme dans le document
 	 */
-	public abstract void setPoids(String terme, String urlDocument, int poids);
+	public abstract void setPoids(String terme, String urlDocument, double poids);
 	
 	/**
 	 * Retourne le nombre d'occurrences du terme dans le document
