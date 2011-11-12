@@ -11,6 +11,13 @@ public class Document {
 	private String titre;
 
 	/**
+	 * Construit un document avec un titre et une url vides.
+	 */
+	public Document() {
+		// On n'a rien à faire ...
+	}
+
+	/**
 	 * Construit un document avec un titre et une url
 	 * 
 	 * @param url
