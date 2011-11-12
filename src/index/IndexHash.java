@@ -52,7 +52,7 @@ public class IndexHash extends Index {
 	}
 
 	@Override
-	public void setPoids(String terme, String urlDocument, int poids) {
+	public void setPoids(String terme, String urlDocument, double poids) {
 		index.get(terme).get(urlDocument).setPoids(poids);
 	}
 }
