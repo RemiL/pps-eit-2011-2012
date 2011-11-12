@@ -29,6 +29,15 @@ public abstract class Index {
 	}
 
 	/**
+	 * Retourne le nombre de documents dans l'index
+	 * @return le nombre de documents dans l'index
+	 */
+	public int getNbDocuments()
+	{
+		return listeDocuments.size();
+	}
+	
+	/**
 	 * Ajoute un terme à l'index
 	 * 
 	 * @param terme
