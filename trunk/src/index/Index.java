@@ -29,14 +29,26 @@ public abstract class Index {
 	}
 
 	/**
+	 * Retourne le document correspondant à l'URL fournie s'il existe, sinon
+	 * retourne null.
+	 * 
+	 * @param urlDocument
+	 *            l'URL du document à retourner
+	 * @return le document correspondant à l'URL fournie s'il existe, null sinon
+	 */
+	public Document getDocument(String urlDocument) {
+		return listeDocuments.get(urlDocument);
+	}
+
+	/**
 	 * Retourne le nombre de documents dans l'index
+	 * 
 	 * @return le nombre de documents dans l'index
 	 */
-	public int getNbDocuments()
-	{
+	public int getNbDocuments() {
 		return listeDocuments.size();
 	}
-	
+
 	/**
 	 * Ajoute un terme à l'index
 	 * 
@@ -88,7 +100,8 @@ public abstract class Index {
 	public abstract int getNbDocumentsTerme(String terme);
 
 	/**
-	 * Retourne le poids d'un terme dans un document
+	 * Retourne le poids d'un terme dans un document, 0 si le terme n'existe pas
+	 * dans l'index ou le document spécifié.
 	 * 
 	 * @param terme
 	 *            le terme

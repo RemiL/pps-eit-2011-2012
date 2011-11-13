@@ -3,27 +3,28 @@ package searcher;
 import index.Document;
 
 /**
- * Un résultat d'une recherche. C'est un couple qui à un document associe une
- * valeur
+ * Un résultat d'une recherche. Il s'agit d'un couple qui à un document associe
+ * une valeur de pertinence. Un résultat est comparable à un autre en fonction
+ * de leur valeur respective de pertinence.
  */
-public class Resultat {
+public class Resultat implements Comparable<Resultat> {
 
 	/** Le document du résultat */
 	Document document;
-	/** La valeur du résultat */
-	double valeur;
+	/** La pertinence du résultat */
+	double pertinence;
 
 	/**
-	 * Construit un résultat d'une recherche avec un document et une valeur
+	 * Construit un résultat d'une recherche avec un document et une pertinence
 	 * 
 	 * @param document
 	 *            le document
-	 * @param valeur
-	 *            la valeur
+	 * @param pertinence
+	 *            la pertinence
 	 */
-	public Resultat(Document document, double valeur) {
+	public Resultat(Document document, double pertinence) {
 		this.document = document;
-		this.valeur = valeur;
+		this.pertinence = pertinence;
 	}
 
 	/**
@@ -36,11 +37,24 @@ public class Resultat {
 	}
 
 	/**
-	 * Retourne la valeur
+	 * Retourne la pertinence
 	 * 
-	 * @return la valeur
+	 * @return la pertinence
 	 */
-	public double getValeur() {
-		return valeur;
+	public double getPertinence() {
+		return pertinence;
+	}
+
+	@Override
+	public int compareTo(Resultat resultat) {
+		int res = 0;
+
+		if (pertinence < resultat.pertinence) {
+			res = -1;
+		} else if (pertinence > resultat.pertinence) {
+			res = 1;
+		}
+
+		return res;
 	}
 }

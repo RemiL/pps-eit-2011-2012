@@ -51,7 +51,11 @@ public class IndexHash extends Index {
 
 	@Override
 	public double getPoids(String terme, String urlDocument) {
-		return index.get(terme).get(urlDocument).getPoids();
+		try {
+			return index.get(terme).get(urlDocument).getPoids();
+		} catch (NullPointerException e) {
+			return 0;
+		}
 	}
 
 	@Override
