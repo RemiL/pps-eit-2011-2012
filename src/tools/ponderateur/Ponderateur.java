@@ -1,5 +1,7 @@
 package tools.ponderateur;
 
+import java.util.ArrayList;
+
 import index.Index;
 
 /**
@@ -20,4 +22,17 @@ public interface Ponderateur {
 	 * @return le poids du terme dans le document
 	 */
 	public double calculerPoids(String terme, String urlDocument, Index index);
+
+	/**
+	 * Calcule le poids d'un terme dans un document
+	 * 
+	 * @param word
+	 *            le terme
+	 * @param wordsDoc
+	 *            la liste des termes du document
+	 * @param index
+	 *            l'index à considérer
+	 * @return le poids du terme dans le document
+	 */
+	public double calculerPoids(String word, ArrayList<String> wordsDoc, Index index);
 }
