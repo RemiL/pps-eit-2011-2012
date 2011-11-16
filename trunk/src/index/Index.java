@@ -14,7 +14,7 @@ public abstract class Index {
 	/**
 	 * Construit un Index vide
 	 */
-	public Index() {
+	protected Index() {
 		listeDocuments = new HashMap<String, Document>();
 	}
 
@@ -66,7 +66,7 @@ public abstract class Index {
 	 * @param document
 	 *            le document à ajouter au terme
 	 */
-	public abstract void addDocumentTerme(String terme, Document document);
+	protected abstract void addDocumentTerme(String terme, Document document);
 
 	/**
 	 * Modifie le poids d'un terme d'un document
@@ -78,7 +78,7 @@ public abstract class Index {
 	 * @param poids
 	 *            le poids du terme dans le document
 	 */
-	public abstract void setPoids(String terme, String urlDocument, double poids);
+	protected abstract void setPoids(String terme, String urlDocument, double poids);
 
 	/**
 	 * Retourne le nombre d'occurrences du terme dans le document

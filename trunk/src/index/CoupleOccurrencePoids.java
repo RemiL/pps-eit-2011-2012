@@ -17,7 +17,7 @@ public class CoupleOccurrencePoids {
 	 * @param poids
 	 *            le poids du document
 	 */
-	public CoupleOccurrencePoids(int nbOccurrences, double poids) {
+	protected CoupleOccurrencePoids(int nbOccurrences, double poids) {
 		this.nbOccurrences = nbOccurrences;
 		this.poids = poids;
 	}
@@ -37,7 +37,7 @@ public class CoupleOccurrencePoids {
 	 * @param nbOccurrences
 	 *            le nouveau nombre d'occurrence du terme dans le document
 	 */
-	public void setNbOccurrences(int nbOccurrences) {
+	protected void setNbOccurrences(int nbOccurrences) {
 		this.nbOccurrences = nbOccurrences;
 	}
 
@@ -56,7 +56,7 @@ public class CoupleOccurrencePoids {
 	 * @param poids
 	 *            le nouveau poids
 	 */
-	public void setPoids(double poids) {
+	protected void setPoids(double poids) {
 		this.poids = poids;
 	}
 }
