@@ -9,11 +9,13 @@ public class Document {
 	private String url;
 	/** Le titre du document */
 	private String titre;
+	/** La norme du vecteur représntant le document */
+	private double norme;
 
 	/**
 	 * Construit un document avec un titre et une url vides.
 	 */
-	public Document() {
+	protected Document() {
 		// On n'a rien à faire ...
 	}
 
@@ -25,7 +27,7 @@ public class Document {
 	 * @param title
 	 *            le titre du document
 	 */
-	public Document(String url, String title) {
+	protected Document(String url, String title) {
 		this.url = url;
 		this.titre = title;
 	}
@@ -45,7 +47,7 @@ public class Document {
 	 * @param url
 	 *            la nouvelle url du document
 	 */
-	public void setUrl(String url) {
+	protected void setUrl(String url) {
 		this.url = url;
 	}
 
@@ -64,7 +66,26 @@ public class Document {
 	 * @param titre
 	 *            le nouveau titre du document
 	 */
-	public void setTitre(String title) {
+	protected void setTitre(String title) {
 		this.titre = title;
+	}
+	
+	/**
+	 * Retourne la norme du document
+	 * 
+	 * @return la norme du document
+	 */
+	public double getNorme() {
+		return norme;
+	}
+
+	/**
+	 * Modifie la norme du document
+	 * 
+	 * @param norme
+	 *            la norme titre du document
+	 */
+	protected void setNorme(double norme) {
+		this.norme = norme;
 	}
 }
