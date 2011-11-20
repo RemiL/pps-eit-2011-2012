@@ -7,7 +7,7 @@ import index.Document;
  * une valeur de pertinence. Un résultat est comparable à un autre en fonction
  * de leur valeur respective de pertinence.
  */
-public class Resultat implements Comparable<Resultat> {
+public class Result implements Comparable<Result> {
 
 	/** Le document du résultat */
 	Document document;
@@ -22,7 +22,7 @@ public class Resultat implements Comparable<Resultat> {
 	 * @param pertinence
 	 *            la pertinence
 	 */
-	public Resultat(Document document, double pertinence) {
+	public Result(Document document, double pertinence) {
 		this.document = document;
 		this.pertinence = pertinence;
 	}
@@ -46,7 +46,7 @@ public class Resultat implements Comparable<Resultat> {
 	}
 
 	@Override
-	public int compareTo(Resultat resultat) {
+	public int compareTo(Result resultat) {
 		int res = 0;
 
 		if (pertinence < resultat.pertinence) {

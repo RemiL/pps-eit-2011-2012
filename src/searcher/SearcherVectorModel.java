@@ -13,7 +13,7 @@ import tools.ponderateur.Ponderateur;
  * Un searcher qui utilise le modèle vectoriel pour trouver les documents les
  * plus pertinant
  */
-public class SearcherModeleVectoriel extends Searcher {
+public class SearcherVectorModel extends Searcher {
 
 	/** Le pondérateur pour traiter la requête */
 	Ponderateur ponderateur;
@@ -29,26 +29,26 @@ public class SearcherModeleVectoriel extends Searcher {
 	 * @param index
 	 *            l'index à questionner
 	 */
-	public SearcherModeleVectoriel(Normalizer normalizer, Ponderateur ponderateur, Index index) {
+	public SearcherVectorModel(Normalizer normalizer, Ponderateur ponderateur, Index index) {
 		super(normalizer, index);
 		this.ponderateur = ponderateur;
 	}
 
 	@Override
-	public LinkedList<Resultat> search(String requete, boolean ignoreStopWords, int nbResultats) {
-		LinkedList<Resultat> results = new LinkedList<Resultat>();
+	public LinkedList<Result> search(String request, boolean ignoreStopWords, int nbResultats) {
+		LinkedList<Result> results = new LinkedList<Result>();
 
-		ArrayList<String> wordsReq = normalizer.normalize(requete, ignoreStopWords);
+		ArrayList<String> wordsReq = normalizer.normalize(request, ignoreStopWords);
 		double[] weightsReq = new double[wordsReq.size()];
 		HashSet<String> docs = new HashSet<String>();
 
 		for (int i = 0; i < weightsReq.length; i++) {
 			// On calcule le poids du terme dans la requête
-			weightsReq[i] = ponderateur.calculerPoids(wordsReq.get(i), wordsReq, index);
+			weightsReq[i] = ponderateur.calculateWeight(wordsReq.get(i), wordsReq, index);
 			// On cherche dans l'index la liste des documents contenant
 			// le terme et on les ajoute à la liste de tous les documents
 			// concernés par la requête.
-			docs.addAll(index.getDocumentsTerme(wordsReq.get(i)));
+			docs.addAll(index.getDocumentsTerm(wordsReq.get(i)));
 		}
 
 		double[] weightsDoc = new double[wordsReq.size()];
@@ -58,13 +58,13 @@ public class SearcherModeleVectoriel extends Searcher {
 		for (String doc : docs) {
 			// On cherche le poids de chacun des termes dans l'index
 			for (int i = 0; i < weightsDoc.length; i++) {
-				weightsDoc[i] = index.getPoids(wordsReq.get(i), doc);
+				weightsDoc[i] = index.getWeight(wordsReq.get(i), doc);
 			}
 			// On calcule la similarité cosinus entre les deux vecteurs
 			similarity = cosinusSimilarity(weightsReq, weightsReq);
 
 			if (similarity != 0) {
-				results.add(new Resultat(index.getDocument(doc), similarity));
+				results.add(new Result(index.getDocument(doc), similarity));
 			}
 		}
 		

@@ -21,7 +21,8 @@ public class IndexerTexte extends Indexer {
 		Document document;
 		String content;
 		ArrayList<String> words;
-
+		double weight;
+		
 		for (String fileName : docsList) {
 			// On charge le document
 			document = new Document();
@@ -33,18 +34,21 @@ public class IndexerTexte extends Indexer {
 			words = normalizer.normalize(content, removeStopWords);
 			// et on ajoute les mots obtenus à l'index.
 			for (String word : words) {
-				index.addDocumentTerme(word, document);
+				index.addDocumentTerm(word, document);
 			}
 		}
 
 		// On calcule la pondération des différents
 		// termes dans les différents documents.
-		for (String word : index.getTermesIndex()) {
-			for (String urlDocument : index.getDocumentsTerme(word)) {
-				index.setPoids(word, urlDocument,
-						ponderateur.calculerPoids(word, urlDocument, index));
+		for (String word : index.getTermsIndex()) {
+			for (String urlDocument : index.getDocumentsTerm(word)) {
+				weight = ponderateur.calculateWeight(word, urlDocument, index);
+				index.setWeight(word, urlDocument, weight);
+				index.getDocument(urlDocument).addPoids(weight);
 			}
 		}
+		
+		index.finalizeNorm();
 	}
 
 	/**
@@ -87,7 +91,7 @@ public class IndexerTexte extends Indexer {
 		if ((line = br.readLine()) != null) {
 			if (line.startsWith(TITLE_MARK)) {
 				line = line.substring(TITLE_MARK.length());
-				document.setTitre(line);
+				document.setTitle(line);
 			}
 			content.append(line);
 			content.append(" ");

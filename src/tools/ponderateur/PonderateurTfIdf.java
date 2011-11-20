@@ -11,14 +11,14 @@ import index.Index;
 public class PonderateurTfIdf implements Ponderateur {
 
 	@Override
-	public double calculerPoids(String terme, String urlDocument, Index index) {
-		return index.getNbOccurrencesTermeDocument(terme, urlDocument)
-				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerme(terme));
+	public double calculateWeight(String term, String urlDocument, Index index) {
+		return index.getNbOccurrencesTermDocument(term, urlDocument)
+				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerm(term));
 	}
 
 	@Override
-	public double calculerPoids(String word, ArrayList<String> wordsDoc, Index index) {
+	public double calculateWeight(String word, ArrayList<String> wordsDoc, Index index) {
 		return Collections.frequency(wordsDoc, word)
-				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerme(word));
+				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerm(word));
 	}
 }

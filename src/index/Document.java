@@ -8,9 +8,9 @@ public class Document {
 	/** L'url du document */
 	private String url;
 	/** Le titre du document */
-	private String titre;
+	private String title;
 	/** La norme du vecteur représntant le document */
-	private double norme;
+	private double norm;
 
 	/**
 	 * Construit un document avec un titre et une url vides.
@@ -29,7 +29,7 @@ public class Document {
 	 */
 	protected Document(String url, String title) {
 		this.url = url;
-		this.titre = title;
+		this.title = title;
 	}
 
 	/**
@@ -56,36 +56,54 @@ public class Document {
 	 * 
 	 * @return le titre du document
 	 */
-	public String getTitre() {
-		return titre;
+	public String getTitle() {
+		return title;
 	}
 
 	/**
 	 * Modifie le titre du document
 	 * 
-	 * @param titre
+	 * @param title
 	 *            le nouveau titre du document
 	 */
-	protected void setTitre(String title) {
-		this.titre = title;
+	protected void setTitle(String title) {
+		this.title = title;
 	}
-	
+
 	/**
 	 * Retourne la norme du document
 	 * 
 	 * @return la norme du document
 	 */
-	public double getNorme() {
-		return norme;
+	public double getNorm() {
+		return norm;
 	}
 
 	/**
 	 * Modifie la norme du document
 	 * 
-	 * @param norme
+	 * @param norm
 	 *            la norme titre du document
 	 */
-	protected void setNorme(double norme) {
-		this.norme = norme;
+	protected void setNorm(double norm) {
+		this.norm = norm;
+	}
+
+	/**
+	 * Ajoute un poids au document pour calculer la norme de celui-ci
+	 * 
+	 * @param weight
+	 *            le poids d'un terme du document
+	 */
+	protected void addPoids(double weight) {
+		norm += Math.pow(weight, 2);
+	}
+
+	/**
+	 * Finalise le calcul de la norme en y appliquant une racine carrée après
+	 * avoir additionné tous les poids au carré
+	 */
+	protected void finalizeNorm() {
+		norm = Math.sqrt(norm);
 	}
 }
