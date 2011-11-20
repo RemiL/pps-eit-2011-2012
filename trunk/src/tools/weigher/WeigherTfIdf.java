@@ -1,4 +1,4 @@
-package tools.ponderateur;
+package tools.weigher;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,9 +6,9 @@ import java.util.Collections;
 import index.Index;
 
 /**
- * Un pondérateur utilisant la méthode tf.idf
+ * Un pondérateur utilisant la méthode tf.idf.
  */
-public class PonderateurTfIdf implements Ponderateur {
+public class WeigherTfIdf implements Weigher {
 
 	@Override
 	public double calculateWeight(String term, String urlDocument, Index index) {

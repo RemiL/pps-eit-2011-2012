@@ -8,19 +8,19 @@ import java.util.Set;
  */
 public class IndexHash extends Index {
 
-	HashMap<String, HashMap<String, CoupleOccurrenceWeight>> index;
+	HashMap<String, HashMap<String, PairOccurrenceWeight>> index;
 
 	/**
 	 * Construit un index vide
 	 */
 	public IndexHash() {
 		super();
-		index = new HashMap<String, HashMap<String, CoupleOccurrenceWeight>>();
+		index = new HashMap<String, HashMap<String, PairOccurrenceWeight>>();
 	}
 
 	@Override
 	protected void addTerm(String term) {
-		index.put(term, new HashMap<String, CoupleOccurrenceWeight>());
+		index.put(term, new HashMap<String, PairOccurrenceWeight>());
 	}
 
 	@Override
@@ -31,12 +31,12 @@ public class IndexHash extends Index {
 		if (!listDocuments.containsKey(document.getUrl()))
 			addDocument(document);
 
-		HashMap<String, CoupleOccurrenceWeight> liste = index.get(term);
+		HashMap<String, PairOccurrenceWeight> liste = index.get(term);
 
 		if (liste.containsKey(document.getUrl()))
 			liste.get(document.getUrl()).setNbOccurrences(liste.get(document.getUrl()).getNbOccurrences() + 1);
 		else
-			liste.put(document.getUrl(), new CoupleOccurrenceWeight(1, 0));
+			liste.put(document.getUrl(), new PairOccurrenceWeight(1, 0));
 	}
 
 	@Override

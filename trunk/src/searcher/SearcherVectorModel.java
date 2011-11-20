@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 import index.Index;
 import tools.normalizer.Normalizer;
-import tools.ponderateur.Ponderateur;
+import tools.weigher.Weigher;
 
 /**
  * Un searcher qui utilise le modèle vectoriel pour trouver les documents les
@@ -16,7 +16,7 @@ import tools.ponderateur.Ponderateur;
 public class SearcherVectorModel extends Searcher {
 
 	/** Le pondérateur pour traiter la requête */
-	Ponderateur ponderateur;
+	Weigher weigher;
 
 	/**
 	 * Construit un searcher utilisant le modèle vectoriel avec un normalizer et
@@ -24,14 +24,14 @@ public class SearcherVectorModel extends Searcher {
 	 * 
 	 * @param normalizer
 	 *            le normalizer pour traiter la requête
-	 * @param ponderateur
+	 * @param weigher
 	 *            le pondérateur pour traiter la requête
 	 * @param index
 	 *            l'index à questionner
 	 */
-	public SearcherVectorModel(Normalizer normalizer, Ponderateur ponderateur, Index index) {
+	public SearcherVectorModel(Normalizer normalizer, Weigher weigher, Index index) {
 		super(normalizer, index);
-		this.ponderateur = ponderateur;
+		this.weigher = weigher;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class SearcherVectorModel extends Searcher {
 
 		for (int i = 0; i < weightsReq.length; i++) {
 			// On calcule le poids du terme dans la requête
-			weightsReq[i] = ponderateur.calculateWeight(wordsReq.get(i), wordsReq, index);
+			weightsReq[i] = weigher.calculateWeight(wordsReq.get(i), wordsReq, index);
 			// On cherche dans l'index la liste des documents contenant
 			// le terme et on les ajoute à la liste de tous les documents
 			// concernés par la requête.
