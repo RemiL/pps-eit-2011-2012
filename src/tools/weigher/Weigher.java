@@ -1,4 +1,4 @@
-package tools.ponderateur;
+package tools.weigher;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,12 @@ import index.Index;
 
 /**
  * Un pondérateur permet de donner un poids à un couple terme/document de
- * l'index
+ * l'index.
  */
-public interface Ponderateur {
+public interface Weigher {
 
 	/**
-	 * Calcule le poids d'un terme dans un document
+	 * Calcule le poids d'un terme dans un document.
 	 * 
 	 * @param term
 	 *            le terme
@@ -24,7 +24,7 @@ public interface Ponderateur {
 	public double calculateWeight(String term, String urlDocument, Index index);
 
 	/**
-	 * Calcule le poids d'un terme dans un document
+	 * Calcule le poids d'un terme dans un document.
 	 * 
 	 * @param word
 	 *            le terme

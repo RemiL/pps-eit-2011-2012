@@ -1,7 +1,7 @@
 package index;
 
 /**
- * Un document avec ses informations
+ * Un document avec ses informations.
  */
 public class Document {
 
@@ -9,7 +9,7 @@ public class Document {
 	private String url;
 	/** Le titre du document */
 	private String title;
-	/** La norme du vecteur représntant le document */
+	/** La norme du vecteur représentant le document */
 	private double norm;
 
 	/**
@@ -20,7 +20,7 @@ public class Document {
 	}
 
 	/**
-	 * Construit un document avec un titre et une url
+	 * Construit un document avec un titre et une url.
 	 * 
 	 * @param url
 	 *            l'url du document
@@ -33,7 +33,7 @@ public class Document {
 	}
 
 	/**
-	 * Retourne l'url du document
+	 * Retourne l'url du document.
 	 * 
 	 * @return l'url du document
 	 */
@@ -42,7 +42,7 @@ public class Document {
 	}
 
 	/**
-	 * Modifie l'url du document
+	 * Modifie l'url du document.
 	 * 
 	 * @param url
 	 *            la nouvelle url du document
@@ -52,7 +52,7 @@ public class Document {
 	}
 
 	/**
-	 * Retourne le titre du document
+	 * Retourne le titre du document.
 	 * 
 	 * @return le titre du document
 	 */
@@ -61,7 +61,7 @@ public class Document {
 	}
 
 	/**
-	 * Modifie le titre du document
+	 * Modifie le titre du document.
 	 * 
 	 * @param title
 	 *            le nouveau titre du document
@@ -71,7 +71,7 @@ public class Document {
 	}
 
 	/**
-	 * Retourne la norme du document
+	 * Retourne la norme du document.
 	 * 
 	 * @return la norme du document
 	 */
@@ -80,7 +80,7 @@ public class Document {
 	}
 
 	/**
-	 * Modifie la norme du document
+	 * Modifie la norme du document.
 	 * 
 	 * @param norm
 	 *            la norme titre du document
@@ -90,12 +90,12 @@ public class Document {
 	}
 
 	/**
-	 * Ajoute un poids au document pour calculer la norme de celui-ci
+	 * Ajoute un poids au document pour calculer la norme de celui-ci.
 	 * 
 	 * @param weight
 	 *            le poids d'un terme du document
 	 */
-	protected void addPoids(double weight) {
+	protected void addWeight(double weight) {
 		norm += Math.pow(weight, 2);
 	}
 

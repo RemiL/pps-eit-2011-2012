@@ -9,20 +9,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import tools.normalizer.Normalizer;
-import tools.ponderateur.Ponderateur;
+import tools.weigher.Weigher;
 
-public class IndexerTexte extends Indexer {
+public class TextIndexer extends Indexer {
 	static private final String URL_MARK = "URL=";
 	static private final String TITLE_MARK = "TITLE=";
 
-	public void index(ArrayList<String> docsList, String encoding, Index index,
-			Normalizer normalizer, boolean removeStopWords,
-			Ponderateur ponderateur) throws IOException {
+	public void index(ArrayList<String> docsList, String encoding, Index index, Normalizer normalizer,
+			boolean removeStopWords, Weigher weigher) throws IOException {
 		Document document;
 		String content;
 		ArrayList<String> words;
 		double weight;
-		
+
 		for (String fileName : docsList) {
 			// On charge le document
 			document = new Document();
@@ -42,12 +41,12 @@ public class IndexerTexte extends Indexer {
 		// termes dans les différents documents.
 		for (String word : index.getTermsIndex()) {
 			for (String urlDocument : index.getDocumentsTerm(word)) {
-				weight = ponderateur.calculateWeight(word, urlDocument, index);
+				weight = weigher.calculateWeight(word, urlDocument, index);
 				index.setWeight(word, urlDocument, weight);
-				index.getDocument(urlDocument).addPoids(weight);
+				index.getDocument(urlDocument).addWeight(weight);
 			}
 		}
-		
+
 		index.finalizeNorm();
 	}
 
@@ -67,8 +66,7 @@ public class IndexerTexte extends Indexer {
 	 * @throws IOException
 	 *             si la lecture du document échoue
 	 */
-	private String loadDocument(String fileName, String encoding,
-			Document document) throws IOException {
+	private String loadDocument(String fileName, String encoding, Document document) throws IOException {
 		// On cherche la taille du fichier pour éviter d'avoir à réallouer le
 		// contenu au fur et à mesure lors de la lecture du fichier.
 		File file = new File(fileName);

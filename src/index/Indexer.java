@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import tools.normalizer.Normalizer;
-import tools.ponderateur.Ponderateur;
+import tools.weigher.Weigher;
 
 // TODO : transformer cette classe en interface ?
 public abstract class Indexer {
@@ -24,11 +24,11 @@ public abstract class Indexer {
 	 * @param removeStopWords
 	 *            indique si les mots vides doivent être supprimés par la
 	 *            normalisation
-	 * @param ponderateur
+	 * @param weigher
 	 *            le pondérateur à utiliser
 	 * @throws IOException
 	 *             si la lecture d'un document échoue
 	 */
 	public abstract void index(ArrayList<String> docsList, String encoding, Index index, Normalizer normalizer,
-			boolean removeStopWords, Ponderateur ponderateur) throws IOException;
+			boolean removeStopWords, Weigher weigher) throws IOException;
 }
