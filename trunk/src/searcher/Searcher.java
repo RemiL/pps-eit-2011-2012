@@ -36,13 +36,13 @@ public abstract class Searcher {
 	 * pertinant au moins pertinant. Le nombr ede documents dans la liste est
 	 * paramétrable
 	 * 
-	 * @param requete
+	 * @param request
 	 *            le requête à traiter
 	 * @param ignoreStopWords
 	 *            indique si les mots vides doivent être ignorés
-	 * @param nbResultats
+	 * @param nbResults
 	 *            le nombre de résultats à retourner. -1 pour tous les résultats
 	 * @return une liste de documents triée du plus pertinant au moins pertiant
 	 */
-	public abstract LinkedList<Resultat> search(String requete, boolean ignoreStopWords, int nbResultats);
+	public abstract LinkedList<Result> search(String request, boolean ignoreStopWords, int nbResults);
 }

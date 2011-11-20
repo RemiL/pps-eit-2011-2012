@@ -29,7 +29,6 @@ public abstract class Indexer {
 	 * @throws IOException
 	 *             si la lecture d'un document échoue
 	 */
-	public abstract void index(ArrayList<String> docsList, String encoding,
-			Index index, Normalizer normalizer, boolean removeStopWords,
-			Ponderateur ponderateur) throws IOException;
+	public abstract void index(ArrayList<String> docsList, String encoding, Index index, Normalizer normalizer,
+			boolean removeStopWords, Ponderateur ponderateur) throws IOException;
 }

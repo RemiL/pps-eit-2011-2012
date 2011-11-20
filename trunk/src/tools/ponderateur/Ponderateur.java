@@ -13,7 +13,7 @@ public interface Ponderateur {
 	/**
 	 * Calcule le poids d'un terme dans un document
 	 * 
-	 * @param terme
+	 * @param term
 	 *            le terme
 	 * @param urlDocument
 	 *            l'url du document
@@ -21,7 +21,7 @@ public interface Ponderateur {
 	 *            l'index à considérer
 	 * @return le poids du terme dans le document
 	 */
-	public double calculerPoids(String terme, String urlDocument, Index index);
+	public double calculateWeight(String term, String urlDocument, Index index);
 
 	/**
 	 * Calcule le poids d'un terme dans un document
@@ -34,5 +34,5 @@ public interface Ponderateur {
 	 *            l'index à considérer
 	 * @return le poids du terme dans le document
 	 */
-	public double calculerPoids(String word, ArrayList<String> wordsDoc, Index index);
+	public double calculateWeight(String word, ArrayList<String> wordsDoc, Index index);
 }

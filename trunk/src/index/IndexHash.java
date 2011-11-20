@@ -8,68 +8,68 @@ import java.util.Set;
  */
 public class IndexHash extends Index {
 
-	HashMap<String, HashMap<String, CoupleOccurrencePoids>> index;
+	HashMap<String, HashMap<String, CoupleOccurrenceWeight>> index;
 
 	/**
 	 * Construit un index vide
 	 */
 	public IndexHash() {
 		super();
-		index = new HashMap<String, HashMap<String, CoupleOccurrencePoids>>();
+		index = new HashMap<String, HashMap<String, CoupleOccurrenceWeight>>();
 	}
 
 	@Override
-	protected void addTerme(String terme) {
-		index.put(terme, new HashMap<String, CoupleOccurrencePoids>());
+	protected void addTerm(String term) {
+		index.put(term, new HashMap<String, CoupleOccurrenceWeight>());
 	}
 
 	@Override
-	public void addDocumentTerme(String terme, Document document) {
+	public void addDocumentTerm(String term, Document document) {
 
-		if (!index.containsKey(terme))
-			addTerme(terme);
-		if (!listeDocuments.containsKey(document.getUrl()))
+		if (!index.containsKey(term))
+			addTerm(term);
+		if (!listDocuments.containsKey(document.getUrl()))
 			addDocument(document);
 
-		HashMap<String, CoupleOccurrencePoids> liste = index.get(terme);
+		HashMap<String, CoupleOccurrenceWeight> liste = index.get(term);
 
 		if (liste.containsKey(document.getUrl()))
 			liste.get(document.getUrl()).setNbOccurrences(liste.get(document.getUrl()).getNbOccurrences() + 1);
 		else
-			liste.put(document.getUrl(), new CoupleOccurrencePoids(1, 0));
+			liste.put(document.getUrl(), new CoupleOccurrenceWeight(1, 0));
 	}
 
 	@Override
-	public int getNbDocumentsTerme(String terme) {
-		return index.get(terme).size();
+	public int getNbDocumentsTerm(String term) {
+		return index.get(term).size();
 	}
 
 	@Override
-	public int getNbOccurrencesTermeDocument(String terme, String urlDocument) {
-		return index.get(terme).get(urlDocument).getNbOccurrences();
+	public int getNbOccurrencesTermDocument(String term, String urlDocument) {
+		return index.get(term).get(urlDocument).getNbOccurrences();
 	}
 
 	@Override
-	public double getPoids(String terme, String urlDocument) {
+	public double getWeight(String term, String urlDocument) {
 		try {
-			return index.get(terme).get(urlDocument).getPoids();
+			return index.get(term).get(urlDocument).getWeight();
 		} catch (NullPointerException e) {
 			return 0;
 		}
 	}
 
 	@Override
-	public void setPoids(String terme, String urlDocument, double poids) {
-		index.get(terme).get(urlDocument).setPoids(poids);
+	public void setWeight(String term, String urlDocument, double weight) {
+		index.get(term).get(urlDocument).setWeight(weight);
 	}
 
 	@Override
-	public Set<String> getDocumentsTerme(String terme) {
-		return index.get(terme).keySet();
+	public Set<String> getDocumentsTerm(String term) {
+		return index.get(term).keySet();
 	}
 
 	@Override
-	public Set<String> getTermesIndex() {
+	public Set<String> getTermsIndex() {
 		return index.keySet();
 	}
 }

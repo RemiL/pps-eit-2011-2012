@@ -3,10 +3,10 @@ package index;
 /**
  * Un couple nombre d'occurrences/poids
  */
-public class CoupleOccurrencePoids {
+public class CoupleOccurrenceWeight {
 
 	private int nbOccurrences;
-	private double poids;
+	private double weight;
 
 	/**
 	 * Construit un couple nombre d'occurrences/poids avec les valeurs passées
@@ -14,12 +14,12 @@ public class CoupleOccurrencePoids {
 	 * 
 	 * @param nbOccurrences
 	 *            le nombre d'occurrences du terme dans le document
-	 * @param poids
+	 * @param weight
 	 *            le poids du document
 	 */
-	protected CoupleOccurrencePoids(int nbOccurrences, double poids) {
+	protected CoupleOccurrenceWeight(int nbOccurrences, double weight) {
 		this.nbOccurrences = nbOccurrences;
-		this.poids = poids;
+		this.weight = weight;
 	}
 
 	/**
@@ -46,17 +46,17 @@ public class CoupleOccurrencePoids {
 	 * 
 	 * @return le poids
 	 */
-	public double getPoids() {
-		return poids;
+	public double getWeight() {
+		return weight;
 	}
 
 	/**
 	 * Modifie le poids
 	 * 
-	 * @param poids
+	 * @param weight
 	 *            le nouveau poids
 	 */
-	protected void setPoids(double poids) {
-		this.poids = poids;
+	protected void setWeight(double weight) {
+		this.weight = weight;
 	}
 }
