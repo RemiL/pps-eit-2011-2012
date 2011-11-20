@@ -38,36 +38,41 @@ public class SearcherVectorModel extends Searcher {
 	public LinkedList<Result> search(String request, boolean ignoreStopWords, int nbResultats) {
 		LinkedList<Result> results = new LinkedList<Result>();
 
-		ArrayList<String> wordsReq = normalizer.normalize(request, ignoreStopWords);
-		double[] weightsReq = new double[wordsReq.size()];
+		ArrayList<String> wordsQuery = normalizer.normalize(request, ignoreStopWords);
+		double[] weightsQuery = new double[wordsQuery.size()];
+		double normQuery = 0;
 		HashSet<String> docs = new HashSet<String>();
 
-		for (int i = 0; i < weightsReq.length; i++) {
+		for (int i = 0; i < weightsQuery.length; i++) {
 			// On calcule le poids du terme dans la requête
-			weightsReq[i] = weigher.calculateWeight(wordsReq.get(i), wordsReq, index);
+			weightsQuery[i] = weigher.calculateWeight(wordsQuery.get(i), wordsQuery, index);
+			// On met à jour la norme.
+			normQuery += weightsQuery[i] * weightsQuery[i];
 			// On cherche dans l'index la liste des documents contenant
 			// le terme et on les ajoute à la liste de tous les documents
 			// concernés par la requête.
-			docs.addAll(index.getDocumentsTerm(wordsReq.get(i)));
+			docs.addAll(index.getDocumentsTerm(wordsQuery.get(i)));
 		}
+		// Finalisation du calcul de la norme.
+		normQuery = Math.sqrt(normQuery);
 
-		double[] weightsDoc = new double[wordsReq.size()];
+		double[] weightsDoc = new double[wordsQuery.size()];
 		double similarity;
 
 		// Pour chaque document contenant au moins un terme de la requête
 		for (String doc : docs) {
 			// On cherche le poids de chacun des termes dans l'index
 			for (int i = 0; i < weightsDoc.length; i++) {
-				weightsDoc[i] = index.getWeight(wordsReq.get(i), doc);
+				weightsDoc[i] = index.getWeight(wordsQuery.get(i), doc);
 			}
 			// On calcule la similarité cosinus entre les deux vecteurs
-			similarity = cosinusSimilarity(weightsReq, weightsReq);
+			similarity = cosinusSimilarity(weightsQuery, normQuery, weightsDoc, index.getDocument(doc).getNorm());
 
 			if (similarity != 0) {
 				results.add(new Result(index.getDocument(doc), similarity));
 			}
 		}
-		
+
 		// TODO : optimiser le code qui suit ?
 		// On trie la liste des résultats.
 		Collections.sort(results);
@@ -81,18 +86,14 @@ public class SearcherVectorModel extends Searcher {
 		return results;
 	}
 
-	private double cosinusSimilarity(double[] weights1, double[] weights2) {
+	private double cosinusSimilarity(double[] weights1, double norm1, double[] weights2, double norm2) {
 		double sim = 0;
-		double sumSquare1 = 0;
-		double sumSquare2 = 0;
 
 		for (int i = 0; i < weights1.length; i++) {
 			sim += weights1[i] * weights2[i];
-			sumSquare1 += weights1[i] * weights1[i];
-			sumSquare2 += weights2[i] * weights2[i];
 		}
 
-		sim /= Math.sqrt(sumSquare1 * sumSquare2);
+		sim /= norm1 * norm2;
 
 		return sim;
 	}
