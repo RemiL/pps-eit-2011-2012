@@ -1,22 +1,30 @@
 package index;
 
+import java.io.Serializable;
+
 /**
  * Un document avec ses informations.
  */
-public class Document {
+public class Document implements Serializable {
 
+	private static final long serialVersionUID = 2590642121208114450L;
 	/** L'url du document */
 	private String url;
 	/** Le titre du document */
 	private String title;
 	/** La norme du vecteur représentant le document */
 	private double norm;
+	/** L'id du document */
+	private int id;
+	/** L'id du prochain document */
+	private static int currentId = 0;
 
 	/**
 	 * Construit un document avec un titre et une url vides.
 	 */
 	protected Document() {
-		// On n'a rien à faire ...
+		this.id = currentId;
+		currentId++;
 	}
 
 	/**
@@ -30,6 +38,17 @@ public class Document {
 	protected Document(String url, String title) {
 		this.url = url;
 		this.title = title;
+		this.id = currentId;
+		currentId++;
+	}
+
+	/**
+	 * Retourne l'id du document
+	 * 
+	 * @return l'id du document
+	 */
+	public int getId() {
+		return id;
 	}
 
 	/**

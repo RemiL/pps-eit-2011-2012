@@ -41,7 +41,7 @@ public class SearcherVectorModel extends Searcher {
 		ArrayList<String> wordsQuery = normalizer.normalize(request, ignoreStopWords);
 		double[] weightsQuery = new double[wordsQuery.size()];
 		double normQuery = 0;
-		HashSet<String> docs = new HashSet<String>();
+		HashSet<Integer> docs = new HashSet<Integer>();
 
 		for (int i = 0; i < weightsQuery.length; i++) {
 			// On calcule le poids du terme dans la requête
@@ -60,7 +60,7 @@ public class SearcherVectorModel extends Searcher {
 		double similarity;
 
 		// Pour chaque document contenant au moins un terme de la requête
-		for (String doc : docs) {
+		for (int doc : docs) {
 			// On cherche le poids de chacun des termes dans l'index
 			for (int i = 0; i < weightsDoc.length; i++) {
 				weightsDoc[i] = index.getWeight(wordsQuery.get(i), doc);

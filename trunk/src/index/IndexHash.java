@@ -8,19 +8,21 @@ import java.util.Set;
  */
 public class IndexHash extends Index {
 
-	HashMap<String, HashMap<String, PairOccurrenceWeight>> index;
+	private static final long serialVersionUID = 6548144981533424715L;
+	/** L'index */
+	private HashMap<String, HashMap<Integer, PairOccurrenceWeight>> index;
 
 	/**
 	 * Construit un index vide
 	 */
 	public IndexHash() {
 		super();
-		index = new HashMap<String, HashMap<String, PairOccurrenceWeight>>();
+		index = new HashMap<String, HashMap<Integer, PairOccurrenceWeight>>();
 	}
 
 	@Override
 	protected void addTerm(String term) {
-		index.put(term, new HashMap<String, PairOccurrenceWeight>());
+		index.put(term, new HashMap<Integer, PairOccurrenceWeight>());
 	}
 
 	@Override
@@ -28,15 +30,15 @@ public class IndexHash extends Index {
 
 		if (!index.containsKey(term))
 			addTerm(term);
-		if (!listDocuments.containsKey(document.getUrl()))
+		if (!listDocuments.containsKey(document.getId()))
 			addDocument(document);
 
-		HashMap<String, PairOccurrenceWeight> liste = index.get(term);
+		HashMap<Integer, PairOccurrenceWeight> liste = index.get(term);
 
-		if (liste.containsKey(document.getUrl()))
-			liste.get(document.getUrl()).setNbOccurrences(liste.get(document.getUrl()).getNbOccurrences() + 1);
+		if (liste.containsKey(document.getId()))
+			liste.get(document.getId()).setNbOccurrences(liste.get(document.getId()).getNbOccurrences() + 1);
 		else
-			liste.put(document.getUrl(), new PairOccurrenceWeight(1, 0));
+			liste.put(document.getId(), new PairOccurrenceWeight(1, 0));
 	}
 
 	@Override
@@ -45,26 +47,26 @@ public class IndexHash extends Index {
 	}
 
 	@Override
-	public int getNbOccurrencesTermDocument(String term, String urlDocument) {
-		return index.get(term).get(urlDocument).getNbOccurrences();
+	public int getNbOccurrencesTermDocument(String term, int idDocument) {
+		return index.get(term).get(idDocument).getNbOccurrences();
 	}
 
 	@Override
-	public double getWeight(String term, String urlDocument) {
+	public double getWeight(String term, int idDocument) {
 		try {
-			return index.get(term).get(urlDocument).getWeight();
+			return index.get(term).get(idDocument).getWeight();
 		} catch (NullPointerException e) {
 			return 0;
 		}
 	}
 
 	@Override
-	public void setWeight(String term, String urlDocument, double weight) {
-		index.get(term).get(urlDocument).setWeight(weight);
+	public void setWeight(String term, int idDocument, double weight) {
+		index.get(term).get(idDocument).setWeight(weight);
 	}
 
 	@Override
-	public Set<String> getDocumentsTerm(String term) {
+	public Set<Integer> getDocumentsTerm(String term) {
 		return index.get(term).keySet();
 	}
 

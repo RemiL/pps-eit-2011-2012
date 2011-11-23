@@ -1,11 +1,16 @@
 package index;
 
+import java.io.Serializable;
+
 /**
  * Un couple nombre d'occurrences/poids.
  */
-public class PairOccurrenceWeight {
+public class PairOccurrenceWeight implements Serializable {
 
+	private static final long serialVersionUID = -7871879634276972901L;
+	/** Le nombre d'occurrences du terme dans le document */
 	private int nbOccurrences;
+	/** Le poids du terme dans le document */
 	private double weight;
 
 	/**

@@ -1,21 +1,23 @@
 package index;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
 /**
  * Un index abstrait
  */
-public abstract class Index {
+public abstract class Index implements Serializable {
 
+	private static final long serialVersionUID = 6230262995907224682L;
 	/** Table de hashage qui à une url associe un document */
-	protected HashMap<String, Document> listDocuments;
+	protected HashMap<Integer, Document> listDocuments;
 
 	/**
 	 * Construit un Index vide
 	 */
 	protected Index() {
-		listDocuments = new HashMap<String, Document>();
+		listDocuments = new HashMap<Integer, Document>();
 	}
 
 	/**
@@ -25,19 +27,19 @@ public abstract class Index {
 	 *            le document à ajouter
 	 */
 	protected void addDocument(Document document) {
-		listDocuments.put(document.getTitle(), document);
+		listDocuments.put(document.getId(), document);
 	}
 
 	/**
 	 * Retourne le document correspondant à l'URL fournie s'il existe, sinon
 	 * retourne null.
 	 * 
-	 * @param urlDocument
-	 *            l'URL du document à retourner
-	 * @return le document correspondant à l'URL fournie s'il existe, null sinon
+	 * @param idDocument
+	 *            l'id du document à retourner
+	 * @return le document correspondant à l'id fournie s'il existe, null sinon
 	 */
-	public Document getDocument(String urlDocument) {
-		return listDocuments.get(urlDocument);
+	public Document getDocument(int idDocument) {
+		return listDocuments.get(idDocument);
 	}
 
 	/**
@@ -81,22 +83,22 @@ public abstract class Index {
 	 * 
 	 * @param term
 	 *            le terme
-	 * @param urlDocument
-	 *            l'url du document
+	 * @param idDocument
+	 *            l'id du document
 	 * @param weight
 	 *            le poids du terme dans le document
 	 */
-	protected abstract void setWeight(String term, String urlDocument, double weight);
+	protected abstract void setWeight(String term, int idDocument, double weight);
 
 	/**
 	 * Retourne le nombre d'occurrences du terme dans le document
 	 * 
 	 * @param term
 	 *            le terme voulu
-	 * @param urlDocument
-	 *            l'url du document
+	 * @param idDocument
+	 *            l'id du document
 	 */
-	public abstract int getNbOccurrencesTermDocument(String term, String urlDocument);
+	public abstract int getNbOccurrencesTermDocument(String term, int idDocument);
 
 	/**
 	 * Retourne le nombre de documents dans lesquels ce trouve le terme
@@ -113,11 +115,11 @@ public abstract class Index {
 	 * 
 	 * @param term
 	 *            le terme
-	 * @param urlDocument
-	 *            l'url du document
+	 * @param idDocument
+	 *            l'id du document
 	 * @return le poids d'un terme dans un document
 	 */
-	public abstract double getWeight(String term, String urlDocument);
+	public abstract double getWeight(String term, int idDocument);
 
 	/**
 	 * Returne un set des termes de l'index
@@ -127,9 +129,9 @@ public abstract class Index {
 	public abstract Set<String> getTermsIndex();
 
 	/**
-	 * Returne un set des documents de l'index
+	 * Returne un set des id des documents d'un terme
 	 * 
-	 * @return un set des documents de l'index
+	 * @return un set des id des documents d'un terme
 	 */
-	public abstract Set<String> getDocumentsTerm(String term);
+	public abstract Set<Integer> getDocumentsTerm(String term);
 }
