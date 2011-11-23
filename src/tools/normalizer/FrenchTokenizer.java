@@ -33,8 +33,7 @@ public class FrenchTokenizer extends Normalizer {
 	 * @throws IOException
 	 *             si la lecture du fichier dont le nom est fourni échoue
 	 */
-	public FrenchTokenizer(String stopWordFileName, String encoding)
-			throws IOException {
+	public FrenchTokenizer(String stopWordFileName, String encoding) throws IOException {
 		super();
 		this.transducer = new FrenchTokenizerAutomaton();
 	}
@@ -113,8 +112,7 @@ public class FrenchTokenizer extends Normalizer {
 	 * @param ignoreStopWords
 	 *            indique si les mots vides doivent être ignorés
 	 */
-	private void addToken(ArrayList<String> list, String token,
-			boolean ignoreStopWords) {
+	private void addToken(ArrayList<String> list, String token, boolean ignoreStopWords) {
 		if (!ignoreStopWords || !isStopWord(token)) {
 			list.add(token);
 		}

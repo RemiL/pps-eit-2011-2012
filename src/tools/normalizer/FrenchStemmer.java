@@ -36,8 +36,7 @@ public class FrenchStemmer extends FrenchTokenizer {
 	 * @throws IOException
 	 *             si la lecture du fichier dont le nom est fourni échoue
 	 */
-	public FrenchStemmer(String stopWordFileName, String encoding)
-			throws IOException {
+	public FrenchStemmer(String stopWordFileName, String encoding) throws IOException {
 		super(stopWordFileName, encoding);
 		stemmer = new frenchStemmer();
 	}

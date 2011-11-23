@@ -15,13 +15,13 @@ public interface Weigher {
 	 * 
 	 * @param term
 	 *            le terme
-	 * @param urlDocument
-	 *            l'url du document
+	 * @param idDocument
+	 *            l'id du document
 	 * @param index
 	 *            l'index à considérer
 	 * @return le poids du terme dans le document
 	 */
-	public double calculateWeight(String term, String urlDocument, Index index);
+	public double calculateWeight(String term, int idDocument, Index index);
 
 	/**
 	 * Calcule le poids d'un terme dans un document.

@@ -40,10 +40,10 @@ public class TextIndexer extends Indexer {
 		// On calcule la pondération des différents
 		// termes dans les différents documents.
 		for (String word : index.getTermsIndex()) {
-			for (String urlDocument : index.getDocumentsTerm(word)) {
-				weight = weigher.calculateWeight(word, urlDocument, index);
-				index.setWeight(word, urlDocument, weight);
-				index.getDocument(urlDocument).addWeight(weight);
+			for (int idDocument : index.getDocumentsTerm(word)) {
+				weight = weigher.calculateWeight(word, idDocument, index);
+				index.setWeight(word, idDocument, weight);
+				index.getDocument(idDocument).addWeight(weight);
 			}
 		}
 

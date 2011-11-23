@@ -11,8 +11,8 @@ import index.Index;
 public class WeigherTfIdf implements Weigher {
 
 	@Override
-	public double calculateWeight(String term, String urlDocument, Index index) {
-		return index.getNbOccurrencesTermDocument(term, urlDocument)
+	public double calculateWeight(String term, int idDocument, Index index) {
+		return index.getNbOccurrencesTermDocument(term, idDocument)
 				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerm(term));
 	}
 
