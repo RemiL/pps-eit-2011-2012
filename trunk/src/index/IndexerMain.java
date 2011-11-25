@@ -24,15 +24,22 @@ public class IndexerMain {
 		try {
 			// Crée l'index
 			ArrayList<String> listFiles = createListFiles("corpus/texte");
+			System.out.println("Nombre de fichiers à indexer : " + listFiles.size());
+			long t1 = System.nanoTime();
 			indexer.index(listFiles, "UTF-8", index, new FrenchTokenizer("frenchST.txt", "UTF-8"), true,
 					new WeigherTfIdf());
+
+			long t2 = System.nanoTime();
+			System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
 			// Sérialise l'index
 			FileOutputStream fichier = new FileOutputStream("indexSansMotsVides.ser");
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
 			oos.writeObject(index);
-			oos.flush();
 			oos.close();
+
+			long t3 = System.nanoTime();
+			System.out.println("Temps de sérialisation : " + (t3 - t2) / 1000000.);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
