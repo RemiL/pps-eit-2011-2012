@@ -1,5 +1,6 @@
 package index;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,8 +34,9 @@ public class IndexerMain {
 			System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
 			// Sérialise l'index
-			FileOutputStream fichier = new FileOutputStream("indexSansMotsVides.ser");
-			ObjectOutputStream oos = new ObjectOutputStream(fichier);
+			FileOutputStream fos = new FileOutputStream("indexSansMotsVides.ser");
+	        BufferedOutputStream bos = new BufferedOutputStream(fos);
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
 			oos.writeObject(index);
 			oos.close();
 

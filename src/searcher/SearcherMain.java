@@ -2,6 +2,7 @@ package searcher;
 
 import index.Index;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,7 +20,8 @@ public class SearcherMain {
 			long t1 = System.nanoTime();
 			// Lecture de l'index depuis un fichier
 			FileInputStream fis = new FileInputStream("indexSansMotsVides.ser");
-			ObjectInputStream ois = new ObjectInputStream(fis);
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			ObjectInputStream ois = new ObjectInputStream(bis);
 			Index index = (Index) ois.readObject();
 
 			long t2 = System.nanoTime();
