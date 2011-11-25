@@ -2,6 +2,7 @@ package tools.weigher;
 
 import java.util.ArrayList;
 
+import index.Document;
 import index.Index;
 
 /**
@@ -15,13 +16,13 @@ public interface Weigher {
 	 * 
 	 * @param term
 	 *            le terme
-	 * @param idDocument
-	 *            l'id du document
+	 * @param document
+	 *            le document
 	 * @param index
 	 *            l'index à considérer
 	 * @return le poids du terme dans le document
 	 */
-	public double calculateWeight(String term, int idDocument, Index index);
+	public double calculateWeight(String term, Document document, Index index);
 
 	/**
 	 * Calcule le poids d'un terme dans un document.

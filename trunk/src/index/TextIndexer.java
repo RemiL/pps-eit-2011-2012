@@ -22,6 +22,8 @@ public class TextIndexer extends Indexer {
 		ArrayList<String> words;
 		double weight;
 
+		index.prepareIndex(docsList.size());
+
 		for (String fileName : docsList) {
 			// On charge le document
 			document = new Document();
@@ -40,10 +42,10 @@ public class TextIndexer extends Indexer {
 		// On calcule la pondération des différents
 		// termes dans les différents documents.
 		for (String word : index.getTermsIndex()) {
-			for (int idDocument : index.getDocumentsTerm(word)) {
-				weight = weigher.calculateWeight(word, idDocument, index);
-				index.setWeight(word, idDocument, weight);
-				index.getDocument(idDocument).addWeight(weight);
+			for (Document doc : index.getDocumentsTerm(word)) {
+				weight = weigher.calculateWeight(word, doc, index);
+				index.setWeight(word, doc, weight);
+				doc.addWeight(weight);
 			}
 		}
 
