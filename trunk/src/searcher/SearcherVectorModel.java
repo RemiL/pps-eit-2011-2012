@@ -77,7 +77,7 @@ public class SearcherVectorModel extends Searcher {
 		// On trie la liste des résultats.
 		Collections.sort(results);
 		// On ne conserve que le nombre désiré de résultats
-		if (nbResultats != -1 && results.size() > nbResultats) {
+		if (nbResultats != ALL_RESULTS && results.size() > nbResultats) {
 			for (int i = results.size() - nbResultats; i > 0; i--) {
 				results.removeFirst();
 			}
