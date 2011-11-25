@@ -14,17 +14,12 @@ public class Document implements Serializable {
 	private String title;
 	/** La norme du vecteur représentant le document */
 	private double norm;
-	/** L'id du document */
-	private int id;
-	/** L'id du prochain document */
-	private static int currentId = 0;
 
 	/**
 	 * Construit un document avec un titre et une url vides.
 	 */
 	protected Document() {
-		this.id = currentId;
-		currentId++;
+		// On n'a rien à faire.
 	}
 
 	/**
@@ -38,17 +33,6 @@ public class Document implements Serializable {
 	protected Document(String url, String title) {
 		this.url = url;
 		this.title = title;
-		this.id = currentId;
-		currentId++;
-	}
-
-	/**
-	 * Retourne l'id du document
-	 * 
-	 * @return l'id du document
-	 */
-	public int getId() {
-		return id;
 	}
 
 	/**

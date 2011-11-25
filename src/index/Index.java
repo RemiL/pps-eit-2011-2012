@@ -1,7 +1,7 @@
 package index;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -10,29 +10,41 @@ import java.util.Set;
 public abstract class Index implements Serializable {
 
 	private static final long serialVersionUID = 6230262995907224682L;
-	/** Table de hashage qui à une url associe un document */
-	protected HashMap<Integer, Document> listDocuments;
+	private ArrayList<Document> listDocuments;
 
 	/**
-	 * Construit un Index vide
+	 * Construit un Index vide.
 	 */
 	protected Index() {
-		listDocuments = new HashMap<Integer, Document>();
+		listDocuments = new ArrayList<Document>();
 	}
 
 	/**
-	 * Ajoute un document à la liste de documents
+	 * Prépare l'index pour accueillir au moins le nombre de documents indiqués.
+	 * 
+	 * L'appel à cette méthode est facultatif mais peut améliorer les
+	 * performances.
+	 * 
+	 * @param nbDocuments
+	 *            le nombre de documents qui vont probablement être ajoutés à
+	 *            l'index
+	 */
+	protected void prepareIndex(int nbDocuments) {
+		listDocuments.ensureCapacity(nbDocuments);
+	}
+
+	/**
+	 * Ajoute un document à la liste de documents.
 	 * 
 	 * @param document
 	 *            le document à ajouter
 	 */
 	protected void addDocument(Document document) {
-		listDocuments.put(document.getId(), document);
+		listDocuments.add(document);
 	}
 
 	/**
-	 * Retourne le document correspondant à l'URL fournie s'il existe, sinon
-	 * retourne null.
+	 * Retourne la liste des documents indexés.
 	 * 
 	 * @param idDocument
 	 *            l'id du document à retourner
@@ -43,7 +55,7 @@ public abstract class Index implements Serializable {
 	}
 
 	/**
-	 * Retourne le nombre de documents dans l'index
+	 * Retourne le nombre de documents dans l'index.
 	 * 
 	 * @return le nombre de documents dans l'index
 	 */
@@ -52,15 +64,15 @@ public abstract class Index implements Serializable {
 	}
 
 	/**
-	 * Finalise la norme de tous les documents de l'index
+	 * Finalise la norme de tous les documents de l'index.
 	 */
 	protected void finalizeNorm() {
-		for (Document doc : listDocuments.values())
+		for (Document doc : listDocuments)
 			doc.finalizeNorm();
 	}
 
 	/**
-	 * Ajoute un terme à l'index
+	 * Ajoute un terme à l'index.
 	 * 
 	 * @param term
 	 *            le terme à ajouter à l'index
@@ -69,7 +81,7 @@ public abstract class Index implements Serializable {
 
 	/**
 	 * Ajoute un document à un terme. S'il existe déjà, son nombre d'occurrence
-	 * est incrémenté. Sinon le document est créé
+	 * est incrémenté. Sinon le document est créé.
 	 * 
 	 * @param term
 	 *            le terme auquel ajouter le document
@@ -79,29 +91,29 @@ public abstract class Index implements Serializable {
 	protected abstract void addDocumentTerm(String term, Document document);
 
 	/**
-	 * Modifie le poids d'un terme d'un document
+	 * Modifie le poids d'un terme d'un document.
 	 * 
 	 * @param term
 	 *            le terme
-	 * @param idDocument
-	 *            l'id du document
+	 * @param document
+	 *            le document
 	 * @param weight
 	 *            le poids du terme dans le document
 	 */
-	protected abstract void setWeight(String term, int idDocument, double weight);
+	protected abstract void setWeight(String term, Document document, double weight);
 
 	/**
-	 * Retourne le nombre d'occurrences du terme dans le document
+	 * Retourne le nombre d'occurrences du terme dans le document.
 	 * 
 	 * @param term
 	 *            le terme voulu
-	 * @param idDocument
-	 *            l'id du document
+	 * @param document
+	 *            le document
 	 */
-	public abstract int getNbOccurrencesTermDocument(String term, int idDocument);
+	public abstract int getNbOccurrencesTermDocument(String term, Document document);
 
 	/**
-	 * Retourne le nombre de documents dans lesquels ce trouve le terme
+	 * Retourne le nombre de documents dans lesquels se trouve le terme.
 	 * 
 	 * @param term
 	 *            le terme
@@ -115,23 +127,23 @@ public abstract class Index implements Serializable {
 	 * 
 	 * @param term
 	 *            le terme
-	 * @param idDocument
-	 *            l'id du document
+	 * @param document
+	 *            le document
 	 * @return le poids d'un terme dans un document
 	 */
-	public abstract double getWeight(String term, int idDocument);
+	public abstract double getWeight(String term, Document document);
 
 	/**
-	 * Returne un set des termes de l'index
+	 * Returne la liste des termes de l'index.
 	 * 
-	 * @return un set des termes de l'index
+	 * @return la liste des termes de l'index
 	 */
 	public abstract Set<String> getTermsIndex();
 
 	/**
-	 * Returne un set des id des documents d'un terme
+	 * Returne la liste des documents contenant un certain terme.
 	 * 
-	 * @return un set des id des documents d'un terme
+	 * @return la liste des documents contenant un certain terme.
 	 */
-	public abstract Set<Integer> getDocumentsTerm(String term);
+	public abstract Set<Document> getDocumentsTerm(String term);
 }

@@ -3,6 +3,7 @@ package tools.weigher;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import index.Document;
 import index.Index;
 
 /**
@@ -11,8 +12,8 @@ import index.Index;
 public class WeigherTfIdf implements Weigher {
 
 	@Override
-	public double calculateWeight(String term, int idDocument, Index index) {
-		return index.getNbOccurrencesTermDocument(term, idDocument)
+	public double calculateWeight(String term, Document document, Index index) {
+		return index.getNbOccurrencesTermDocument(term, document)
 				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerm(term));
 	}
 

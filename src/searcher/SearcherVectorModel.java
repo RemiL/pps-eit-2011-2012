@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.HashSet;
 
+import index.Document;
 import index.Index;
 import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
@@ -41,7 +42,7 @@ public class SearcherVectorModel extends Searcher {
 		ArrayList<String> wordsQuery = normalizer.normalize(request, ignoreStopWords);
 		double[] weightsQuery = new double[wordsQuery.size()];
 		double normQuery = 0;
-		HashSet<Integer> docs = new HashSet<Integer>();
+		HashSet<Document> docs = new HashSet<Document>();
 
 		for (int i = 0; i < weightsQuery.length; i++) {
 			// On calcule le poids du terme dans la requête
@@ -60,16 +61,16 @@ public class SearcherVectorModel extends Searcher {
 		double similarity;
 
 		// Pour chaque document contenant au moins un terme de la requête
-		for (int doc : docs) {
+		for (Document doc : docs) {
 			// On cherche le poids de chacun des termes dans l'index
 			for (int i = 0; i < weightsDoc.length; i++) {
 				weightsDoc[i] = index.getWeight(wordsQuery.get(i), doc);
 			}
 			// On calcule la similarité cosinus entre les deux vecteurs
-			similarity = cosinusSimilarity(weightsQuery, normQuery, weightsDoc, index.getDocument(doc).getNorm());
+			similarity = cosinusSimilarity(weightsQuery, normQuery, weightsDoc, doc.getNorm());
 
 			if (similarity != 0) {
-				results.add(new Result(index.getDocument(doc), similarity));
+				results.add(new Result(doc, similarity));
 			}
 		}
 
