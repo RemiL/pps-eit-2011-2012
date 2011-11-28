@@ -1,10 +1,7 @@
 package index;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import tools.normalizer.FrenchTokenizer;
@@ -33,12 +30,8 @@ public class IndexerMain {
 			long t2 = System.nanoTime();
 			System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
-			// Sérialise l'index
-			FileOutputStream fos = new FileOutputStream("indexSansMotsVides.ser");
-	        BufferedOutputStream bos = new BufferedOutputStream(fos);
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(index);
-			oos.close();
+			// Exporte l'index
+			index.export("indexSansMotsVides.ser");
 
 			long t3 = System.nanoTime();
 			System.out.println("Temps de sérialisation : " + (t3 - t2) / 1000000.);

@@ -1,5 +1,12 @@
 package index;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
@@ -146,4 +153,43 @@ public abstract class Index implements Serializable {
 	 * @return la liste des documents contenant un certain terme.
 	 */
 	public abstract Set<Document> getDocumentsTerm(String term);
+
+	/**
+	 * Charge un index depuis un fichier dont le nom est fourni. Cette méthode
+	 * retourne null si le fichier indiqué ne correspondait pas à un index.
+	 * 
+	 * @param fileName
+	 *            le nom du fichier depuis lequel l'index doit être chargé.
+	 * @throws IOException
+	 *             si la lecture du fichier a échoué.
+	 * @return l'index chargé depuis le fichier ou null si le fichier ne
+	 *         correspondait pas à un index.
+	 */
+	public static Index load(String fileName) throws IOException {
+		FileInputStream fis = new FileInputStream(fileName);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+		ObjectInputStream ois = new ObjectInputStream(bis);
+
+		try {
+			return (Index) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Exporte l'index dans un fichier dont le nom est fourni.
+	 * 
+	 * @param fileName
+	 *            le nom du fichier dans lequel l'index doit être sauvegardé.
+	 * @throws IOException
+	 *             si l'écriture du fichier a échoué.
+	 */
+	public void export(String fileName) throws IOException {
+		FileOutputStream fos = new FileOutputStream(fileName);
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		oos.writeObject(this);
+		oos.close();
+	}
 }
