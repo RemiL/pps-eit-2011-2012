@@ -1,10 +1,10 @@
 package tools.weigher;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import index.Document;
 import index.Index;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Un pondérateur utilisant la méthode tf.idf.
@@ -18,7 +18,7 @@ public class WeigherTfIdf implements Weigher {
 	}
 
 	@Override
-	public double calculateWeight(String word, ArrayList<String> wordsDoc, Index index) {
+	public double calculateWeight(String word, List<String> wordsDoc, Index index) {
 		return Collections.frequency(wordsDoc, word)
 				* Math.log10(index.getNbDocuments() / index.getNbDocumentsTerm(word));
 	}

@@ -148,6 +148,15 @@ public abstract class Index implements Serializable {
 	public abstract Set<String> getTermsIndex();
 
 	/**
+	 * Returne la liste des termes de l'index commençant par le préfixe fourni.
+	 * 
+	 * @return la liste des termes de l'index commençant par le préfixe fourni.
+	 * @throws UnsupportedOperationException
+	 *             si l'index ne supporte pas la recherche par préfixe.
+	 */
+	public abstract Set<String> getTermsIndex(String prefix) throws UnsupportedOperationException;
+
+	/**
 	 * Returne la liste des documents contenant un certain terme.
 	 * 
 	 * @return la liste des documents contenant un certain terme.

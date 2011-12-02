@@ -1,23 +1,24 @@
 package index;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Set;
 
 /**
- * Classe représentant un index basé sur une table de hachage.
+ * Classe représentant un index basé sur un arbre-B.
  */
-public class IndexHash extends Index {
+public class IndexTree extends Index {
 
 	private static final long serialVersionUID = 6548144981533424715L;
 	/** L'index */
-	private HashMap<String, HashMap<Document, PairOccurrenceWeight>> index;
+	private TreeMap<String, HashMap<Document, PairOccurrenceWeight>> index;
 
 	/**
-	 * Construit un index vide basé sur une table de hachage.
+	 * Construit un index vide basé sur un arbre-B.
 	 */
-	public IndexHash() {
+	public IndexTree() {
 		super();
-		index = new HashMap<String, HashMap<Document, PairOccurrenceWeight>>();
+		index = new TreeMap<String, HashMap<Document, PairOccurrenceWeight>>();
 	}
 
 	@Override
@@ -79,7 +80,11 @@ public class IndexHash extends Index {
 
 	@Override
 	public Set<String> getTermsIndex(String prefix) throws UnsupportedOperationException {
-		// IndexHash ne supporte pas les recherches par préfixe.
-		throw new UnsupportedOperationException("La recherche par préfixe n'est pas supportée par IndexHash");
+		// On cherche la lettre suivant la dernière lettre du préfixe
+		char nextLetter = (char) (prefix.charAt(prefix.length() - 1) + 1);
+		// pour en déduire la borne de fin des termes à retourner.
+		String end = prefix.substring(0, prefix.length() - 1) + nextLetter;
+
+		return index.subMap(prefix, true, end, false).keySet();
 	}
 }

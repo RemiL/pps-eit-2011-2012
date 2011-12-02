@@ -8,16 +8,13 @@ import tools.normalizer.FrenchTokenizer;
 import tools.weigher.WeigherTfIdf;
 
 /**
- * Index pour un répertoire entier
+ * Classe de test pour l'indexation.
  */
 public class IndexerMain {
 
-	/**
-	 * Index un répertoire entier
-	 */
 	public static void main(String[] args) {
 		Indexer indexer = new TextIndexer();
-		Index index = new IndexHash();
+		Index index = new IndexTree();
 
 		try {
 			// Crée l'index
@@ -31,7 +28,7 @@ public class IndexerMain {
 			System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
 			// Exporte l'index
-			index.export("indexSansMotsVides.ser");
+			index.export("indexSansMotsVides2.ser");
 
 			long t3 = System.nanoTime();
 			System.out.println("Temps de sérialisation : " + (t3 - t2) / 1000000.);
@@ -41,7 +38,7 @@ public class IndexerMain {
 	}
 
 	/**
-	 * Crée la liste des noms des fichiers d'un répertoire
+	 * Crée la liste des noms des fichiers d'un répertoire.
 	 * 
 	 * @param dirName
 	 *            le nom du répertoire
