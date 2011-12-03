@@ -7,8 +7,9 @@ import tools.normalizer.Normalizer;
 
 public class AndQuery extends AndOrQuery {
 
-	public AndQuery(String query, Normalizer normalizer, boolean ignoreStopWords) throws InvalideQueryException {
-		super(query, normalizer, ignoreStopWords);
+	public AndQuery(String query, Normalizer normalizer, boolean ignoreStopWords, Index index)
+			throws InvalideQueryException {
+		super(query, normalizer, ignoreStopWords, index);
 	}
 
 	@Override

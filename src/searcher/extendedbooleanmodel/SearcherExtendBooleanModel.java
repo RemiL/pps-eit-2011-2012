@@ -47,7 +47,7 @@ public class SearcherExtendBooleanModel extends Searcher {
 
 		Query query;
 		try {
-			query = Query.parse(requests[0], normalizer, ignoreStopWords);
+			query = Query.parse(requests[0], normalizer, ignoreStopWords, index);
 		} catch (EmptyQueryException e) {
 			throw new InvalideQueryException(request);
 		}
