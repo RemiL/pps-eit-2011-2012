@@ -17,8 +17,8 @@ public class NotQuery extends Query {
 
 	@Override
 	public void getRelatedDocuments(Index index, Set<Document> documents) {
-		// On ne fait rien, on considère que l'opérateur NOT ne peut pas ajouter
-		// de documents
+		// On ne fait rien, on considère que l'opérateur NOT
+		// ne peut pas ajouter de documents.
 	}
 
 	@Override

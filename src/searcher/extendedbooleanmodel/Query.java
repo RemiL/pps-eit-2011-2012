@@ -11,6 +11,7 @@ public abstract class Query {
 	protected static final String AND = "AND\\(.+\\)";
 	protected static final String OR = "OR\\(.+\\)";
 	protected static final String NOT = "NOT\\(.+\\)";
+	protected static final String EXCLUDE = "EXCLUDE\\(.+\\)";
 	
 	public abstract void getRelatedDocuments(Index index, Set<Document> documents);
 
