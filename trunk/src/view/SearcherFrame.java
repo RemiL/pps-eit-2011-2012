@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import searcher.Result;
+import view.MenuBar.NormalizerType;
 import view.MenuBar.SearcherType;
 
 public class SearcherFrame extends JFrame {
@@ -43,12 +44,13 @@ public class SearcherFrame extends JFrame {
 	}
 
 	public void displayForm() {
+		this.getContentPane().removeAll();
 		this.getContentPane().add(formPan, BorderLayout.NORTH);
 		this.getContentPane().validate();
 	}
 
 	public void displayResults(LinkedList<Result> results) {
-		this.remove(resultsPan);
+		this.getContentPane().remove(resultsPan);
 		resultsPan.displayResults(results);
 		this.getContentPane().add(resultsPan, BorderLayout.CENTER);
 		this.getContentPane().validate();
@@ -68,5 +70,13 @@ public class SearcherFrame extends JFrame {
 
 	public AbstractButton getMenuLoad() {
 		return menuBar.getMenuLoad();
+	}
+
+	public String getStopWordsPath() {
+		return menuBar.getStopWordsPath();
+	}
+
+	public NormalizerType getNormalizerType() {
+		return menuBar.getNormalizerType();
 	}
 }
