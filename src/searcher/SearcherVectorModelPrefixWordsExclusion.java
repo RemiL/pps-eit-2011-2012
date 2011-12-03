@@ -77,7 +77,7 @@ public class SearcherVectorModelPrefixWordsExclusion extends SearcherVectorModel
 				// on le traite normalement.
 
 				// On calcule le poids du terme dans la requête
-				weightsQuery[i] = weigher.calculateWeight(term, wordsQuery, index);
+				weightsQuery[i] = weigher.calculateQueryWeight(term, wordsQuery, index);
 				// On met à jour la norme.
 				normQuery += weightsQuery[i] * weightsQuery[i];
 				// On cherche dans l'index la liste des documents contenant

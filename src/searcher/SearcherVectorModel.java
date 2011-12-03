@@ -89,7 +89,7 @@ public class SearcherVectorModel extends Searcher {
 
 		for (int i = 0; i < weightsQuery.length; i++) {
 			// On calcule le poids du terme dans la requête
-			weightsQuery[i] = weigher.calculateWeight(wordsQuery.get(i), wordsQuery, index);
+			weightsQuery[i] = weigher.calculateQueryWeight(wordsQuery.get(i), wordsQuery, index);
 			// On met à jour la norme.
 			normQuery += weightsQuery[i] * weightsQuery[i];
 			// On cherche dans l'index la liste des documents contenant
