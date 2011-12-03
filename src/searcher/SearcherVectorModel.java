@@ -84,7 +84,7 @@ public class SearcherVectorModel extends Searcher {
 	 *            la liste à remplir des documents concernés par la requête.
 	 * @return la norme de la requête.
 	 */
-	protected double setupSearch(List<String> wordsQuery, double[] weightsQuery, HashSet<Document> docs) {
+	protected double setupSearch(List<String> wordsQuery, double[] weightsQuery, Set<Document> docs) {
 		double normQuery = 0;
 
 		for (int i = 0; i < weightsQuery.length; i++) {
@@ -153,7 +153,7 @@ public class SearcherVectorModel extends Searcher {
 	protected double cosinusSimilarity(double[] weights1, double norm1, double[] weights2, double norm2) {
 		double sim = 0;
 
-		for (int i = 0; i < weights1.length; i++) {
+		for (int i = 0; i < weights1.length && i < weights2.length; i++) {
 			sim += weights1[i] * weights2[i];
 		}
 
