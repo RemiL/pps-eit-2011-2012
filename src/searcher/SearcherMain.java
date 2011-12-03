@@ -16,9 +16,9 @@ import tools.normalizer.FrenchTokenizer;
 import tools.normalizer.Normalizer;
 import tools.weigher.WeigherTfIdf;
 
-import view.MenuBar.NormalizerType;
-import view.MenuBar.SearcherType;
-import view.SearcherFrame;
+import searcher.view.SearcherFrame;
+import searcher.view.MenuBar.NormalizerType;
+import searcher.view.MenuBar.SearcherType;
 
 public class SearcherMain implements ActionListener {
 
@@ -31,9 +31,6 @@ public class SearcherMain implements ActionListener {
 		searcherFrame = new SearcherFrame();
 		searcherFrame.getButtonSearcher().addActionListener(this);
 		searcherFrame.getMenuLoad().addActionListener(this);
-
-		normalizer = null;
-		index = null;
 	}
 
 	/**
