@@ -29,8 +29,9 @@ public class IndexHash extends Index {
 	@Override
 	public void addDocumentTerm(String term, Document document) {
 
-		if (!index.containsKey(term))
+		if (!index.containsKey(term)) {
 			addTerm(term);
+		}
 		/*
 		 * TODO : faire quelque chose ?! if
 		 * (!listDocuments.containsKey(document.getId())) addDocument(document);
@@ -38,10 +39,15 @@ public class IndexHash extends Index {
 
 		HashMap<Document, PairOccurrenceWeight> liste = index.get(term);
 
-		if (liste.containsKey(document))
-			liste.get(document).setNbOccurrences(liste.get(document).getNbOccurrences() + 1);
-		else
+		int nbOcc = 1;
+		if (liste.containsKey(document)) {
+			nbOcc = liste.get(document).getNbOccurrences() + 1;
+			liste.get(document).setNbOccurrences(nbOcc);
+		} else {
 			liste.put(document, new PairOccurrenceWeight(1, 0));
+		}
+
+		document.updateMaxTermFrequency(nbOcc);
 	}
 
 	@Override
@@ -94,5 +100,16 @@ public class IndexHash extends Index {
 	public Set<String> getTermsIndex(String prefix) throws UnsupportedOperationException {
 		// IndexHash ne supporte pas les recherches par préfixe.
 		throw new UnsupportedOperationException("La recherche par préfixe n'est pas supportée par IndexHash");
+	}
+
+	@Override
+	public void updateMinDocsCountByTerm() {
+		minDocsCountByTerm = Integer.MAX_VALUE;
+
+		for (HashMap<Document, PairOccurrenceWeight> v : index.values()) {
+			if (minDocsCountByTerm > v.size()) {
+				minDocsCountByTerm = v.size();
+			}
+		}
 	}
 }

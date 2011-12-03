@@ -39,10 +39,15 @@ public class IndexTree extends Index {
 
 		HashMap<Document, PairOccurrenceWeight> liste = index.get(term);
 
-		if (liste.containsKey(document))
-			liste.get(document).setNbOccurrences(liste.get(document).getNbOccurrences() + 1);
-		else
+		int nbOcc = 1;
+		if (liste.containsKey(document)) {
+			nbOcc = liste.get(document).getNbOccurrences() + 1;
+			liste.get(document).setNbOccurrences(nbOcc);
+		} else {
 			liste.put(document, new PairOccurrenceWeight(1, 0));
+		}
+
+		document.updateMaxTermFrequency(nbOcc);
 	}
 
 	@Override
@@ -99,5 +104,16 @@ public class IndexTree extends Index {
 		String end = prefix.substring(0, prefix.length() - 1) + nextLetter;
 
 		return index.subMap(prefix, true, end, false).keySet();
+	}
+
+	@Override
+	public void updateMinDocsCountByTerm() {
+		minDocsCountByTerm = Integer.MAX_VALUE;
+
+		for (HashMap<Document, PairOccurrenceWeight> v : index.values()) {
+			if (minDocsCountByTerm > v.size()) {
+				minDocsCountByTerm = v.size();
+			}
+		}
 	}
 }

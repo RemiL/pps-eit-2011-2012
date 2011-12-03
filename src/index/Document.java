@@ -8,14 +8,16 @@ import java.io.Serializable;
 public class Document implements Serializable {
 
 	private static final long serialVersionUID = 2590642121208114450L;
-	/** L'url du document */
+	/** L'url du document. */
 	private String url;
-	/** Le chemin vers le fichier dans le répertoire corpus */
+	/** Le chemin vers le fichier dans le répertoire corpus. */
 	private String path;
-	/** Le titre du document */
+	/** Le titre du document. */
 	private String title;
-	/** La norme du vecteur représentant le document */
+	/** La norme du vecteur représentant le document. */
 	private double norm;
+	/** Le plus grand nombre d'occurences pour un terme du document. */
+	private int maxTermFrequency;
 
 	/**
 	 * Construit un document avec un titre et une url vides.
@@ -57,9 +59,9 @@ public class Document implements Serializable {
 		this.url = url;
 	}
 
-	
 	/**
 	 * Retourne le chemin du document
+	 * 
 	 * @return le chemin du document
 	 */
 	public String getPath() {
@@ -130,5 +132,36 @@ public class Document implements Serializable {
 	 */
 	protected void finalizeNorm() {
 		norm = Math.sqrt(norm);
+	}
+
+	/**
+	 * Retourne le nombre maximal d'occurences d'un mot dans le document.
+	 * 
+	 * @return le nombre maximal d'occurences d'un mot dans le document.
+	 */
+	public int getMaxTermFrequency() {
+		return maxTermFrequency;
+	}
+
+	/**
+	 * Modifie le nombre maximal d'occurences d'un mot dans le document.
+	 * 
+	 * @param maxTermFrequency
+	 *            le nombre maximal d'occurences d'un mot dans le document.
+	 */
+	public void setMaxTermFrequency(int maxTermFrequency) {
+		this.maxTermFrequency = maxTermFrequency;
+	}
+
+	/**
+	 * Met à jour le nombre maximal d'occurences d'un mot dans le document.
+	 * 
+	 * @param termFrequency
+	 *            une nouvelle valeur d'occurences
+	 */
+	public void updateMaxTermFrequency(int termFrequency) {
+		if (maxTermFrequency < termFrequency) {
+			maxTermFrequency = termFrequency;
+		}
 	}
 }

@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import tools.normalizer.FrenchTokenizer;
 import tools.weigher.WeigherTfIdf;
+import tools.weigher.WeigherTfIdfNorm;
 import view.MenuBar.SearcherType;
 import view.SearcherFrame;
 

@@ -17,7 +17,10 @@ import java.util.Set;
 public abstract class Index implements Serializable {
 
 	private static final long serialVersionUID = 6230262995907224682L;
+	/** La liste des documents indexés. */
 	private ArrayList<Document> listDocuments;
+	/** Le nombre minimal de documents par terme. */
+	protected int minDocsCountByTerm;
 
 	/**
 	 * Construit un Index vide.
@@ -162,6 +165,20 @@ public abstract class Index implements Serializable {
 	 * @return la liste des documents contenant un certain terme.
 	 */
 	public abstract Set<Document> getDocumentsTerm(String term);
+
+	/**
+	 * Retourne le nombre minimal de documents par terme.
+	 * 
+	 * @return le nombre minimal de documents par terme.
+	 */
+	public int getMinDocsCountByTerm() {
+		return minDocsCountByTerm;
+	}
+
+	/**
+	 * Met à jour le nombre minimal de documents par terme.
+	 */
+	public abstract void updateMinDocsCountByTerm();
 
 	/**
 	 * Charge un index depuis un fichier dont le nom est fourni. Cette méthode
