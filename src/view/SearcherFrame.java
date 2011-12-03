@@ -45,13 +45,14 @@ public class SearcherFrame extends JFrame {
 
 	public void displayForm() {
 		this.getContentPane().removeAll();
-		this.getContentPane().add(formPan, BorderLayout.NORTH);
+		this.getContentPane().add(formPan, BorderLayout.CENTER);
 		this.getContentPane().validate();
 	}
 
 	public void displayResults(LinkedList<Result> results) {
-		this.getContentPane().remove(resultsPan);
+		this.getContentPane().removeAll();
 		resultsPan.displayResults(results);
+		this.getContentPane().add(formPan, BorderLayout.NORTH);
 		this.getContentPane().add(resultsPan, BorderLayout.CENTER);
 		this.getContentPane().validate();
 	}
@@ -78,5 +79,21 @@ public class SearcherFrame extends JFrame {
 
 	public NormalizerType getNormalizerType() {
 		return menuBar.getNormalizerType();
+	}
+
+	public boolean isModifiedSearcher() {
+		return menuBar.isModifiedSearcher();
+	}
+	
+	public boolean isModifiedNormalizer() {
+		return menuBar.isModifiedNormalizer();
+	}
+	
+	public boolean isModifiedIndex() {
+		return menuBar.isModifiedIndex();
+	}
+	
+	public boolean isModifiedStopWords() {
+		return menuBar.isModifiedStopWords();
 	}
 }

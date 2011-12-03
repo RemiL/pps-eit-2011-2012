@@ -31,6 +31,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	private String indexPath, stopWordsPath;
 	private SearcherType searcherType;
 	private NormalizerType normalizerType;
+	private boolean isModifiedIndex;
+	private boolean isModifiedStopWords;
+	private boolean isModifiedSearcher;
+	private boolean isModifiedNormalizer;
 
 	public MenuBar() {
 		super();
@@ -80,6 +84,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
 		menuLoad = new JMenuItem("Charger");
 		menuLoad.setEnabled(false);
+		menuLoad.addActionListener(this);
 
 		menuLoader.add(menuOpenIndex);
 		menuLoader.add(menuOpenStopWords);
@@ -90,6 +95,11 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
 		indexPath = "";
 		stopWordsPath = "";
+		
+		isModifiedIndex = false;
+		isModifiedNormalizer = false;
+		isModifiedSearcher = false;
+		isModifiedStopWords = false;
 	}
 
 	public JMenuItem getMenuLoad() {
@@ -112,11 +122,28 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		return normalizerType;
 	}
 
+	public boolean isModifiedIndex() {
+		return isModifiedIndex;
+	}
+
+	public boolean isModifiedStopWords() {
+		return isModifiedStopWords;
+	}
+
+	public boolean isModifiedSearcher() {
+		return isModifiedSearcher;
+	}
+
+	public boolean isModifiedNormalizer() {
+		return isModifiedNormalizer;
+	}
+
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == menuOpenIndex) {
 			int retval = indexFileChooser.showOpenDialog(MenuBar.this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
 				indexPath = indexFileChooser.getSelectedFile().getPath();
+				isModifiedIndex = true;
 				if (!stopWordsPath.equals(""))
 					menuLoad.setEnabled(true);
 			}
@@ -124,18 +151,34 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			int retval = stopWordsFileChooser.showOpenDialog(MenuBar.this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
 				stopWordsPath = stopWordsFileChooser.getSelectedFile().getPath();
+				isModifiedStopWords = true;
 				if (!indexPath.equals(""))
 					menuLoad.setEnabled(true);
 			}
+		} else if(arg0.getSource() == menuLoad) {
+			isModifiedIndex = false;
+			isModifiedNormalizer = false;
+			isModifiedSearcher = false;
+			isModifiedStopWords = false;
 		} else if (arg0.getSource() == rbMenuVectBasic) {
+			if(searcherType != SearcherType.VECT_BASIC)
+				isModifiedSearcher = true;
 			searcherType = SearcherType.VECT_BASIC;
 		} else if (arg0.getSource() == rbMenuVectPrefix) {
+			if(searcherType != SearcherType.VECT_PREFIX)
+				isModifiedSearcher = true;
 			searcherType = SearcherType.VECT_PREFIX;
 		} else if (arg0.getSource() == rbMenuVectPrefixExclusion) {
+			if(searcherType != SearcherType.VECT_PREFIX_EXCLUSION)
+				isModifiedSearcher = true;
 			searcherType = SearcherType.VECT_PREFIX_EXCLUSION;
 		} else if (arg0.getSource() == rbMenuTokenizer) {
+			if(normalizerType != NormalizerType.TOKENIZER)
+				isModifiedNormalizer = true;
 			normalizerType = NormalizerType.TOKENIZER;
 		} else if (arg0.getSource() == rbMenuStemmer) {
+			if(normalizerType != NormalizerType.STEMMER)
+				isModifiedNormalizer = true;
 			normalizerType = NormalizerType.STEMMER;
 		}
 	}
