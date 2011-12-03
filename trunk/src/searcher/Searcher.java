@@ -1,8 +1,9 @@
 package searcher;
 
+import index.Index;
+
 import java.util.LinkedList;
 
-import index.Index;
 import tools.normalizer.Normalizer;
 
 /**
@@ -46,9 +47,13 @@ public abstract class Searcher {
 	 * @param nbResults
 	 *            le nombre de résultats à retourner. ALL_RESULTS pour tous les
 	 *            résultats.
-	 * @return une liste de documents triée du plus pertinant au moins pertinant
+	 * @return une liste de documents triée du plus pertinant au moins
+	 *         pertinant.
+	 * @throws InvalideQueryException
+	 *             si l'exception est invalide.
 	 */
-	public abstract LinkedList<Result> search(String request, boolean ignoreStopWords, int nbResults);
+	public abstract LinkedList<Result> search(String request, boolean ignoreStopWords, int nbResults)
+			throws InvalideQueryException;
 
 	/**
 	 * Lance une recherche dans l'index avec la requête en paramètre. Le
@@ -60,9 +65,12 @@ public abstract class Searcher {
 	 *            le requête à traiter
 	 * @param ignoreStopWords
 	 *            indique si les mots vides doivent être ignorés
-	 * @return une liste de documents triée du plus pertinant au moins pertinant
+	 * @return une liste de documents triée du plus pertinant au moins
+	 *         pertinant.
+	 * @throws InvalideQueryException
+	 *             si l'exception est invalide.
 	 */
-	public LinkedList<Result> search(String request, boolean ignoreStopWords) {
+	public LinkedList<Result> search(String request, boolean ignoreStopWords) throws InvalideQueryException {
 		return search(request, ignoreStopWords, ALL_RESULTS);
 	}
 }

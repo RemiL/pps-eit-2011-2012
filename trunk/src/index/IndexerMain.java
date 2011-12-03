@@ -4,8 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import searcher.InvalideQueryException;
+import searcher.Result;
+import searcher.Searcher;
+import searcher.extendedbooleanmodel.SearcherExtendBooleanModel;
 import tools.normalizer.FrenchTokenizer;
-import tools.weigher.WeigherTfIdf;
+import tools.weigher.WeigherTfIdfNorm;
 
 /**
  * Classe de test pour l'indexation.
@@ -22,17 +26,24 @@ public class IndexerMain {
 			System.out.println("Nombre de fichiers à indexer : " + listFiles.size());
 			long t1 = System.nanoTime();
 			indexer.index(listFiles, "UTF-8", index, new FrenchTokenizer("frenchST.txt", "UTF-8"), true,
-					new WeigherTfIdf());
+					new WeigherTfIdfNorm());
 
 			long t2 = System.nanoTime();
 			System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
 			// Exporte l'index
-			index.export("indexSansMotsVides3.ser");
-
+			// index.export("indexSansMotsVides3.ser");
 			long t3 = System.nanoTime();
 			System.out.println("Temps de sérialisation : " + (t3 - t2) / 1000000.);
+
+			Searcher searcher = new SearcherExtendBooleanModel(new FrenchTokenizer("frenchST.txt", "UTF-8"), index);
+			for (Result r : searcher.search("AND(OR(basketball, encyclopédie, guide), NOT(xxx))", true)) {
+				System.out.println(r.getDocument().getTitle() + " : " + r.getPertinence());
+			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalideQueryException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
