@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileFilter;
 public class MenuBar extends JMenuBar implements ActionListener {
 
 	public enum SearcherType {
-		VECT_BASIC, VECT_PREFIX, VECT_PREFIX_EXCLUSION
+		VECT_BASIC, VECT_PREFIX, VECT_PREFIX_EXCLUSION, EXTENDED_BOOLEAN
 	};
 
 	public enum NormalizerType {
@@ -25,7 +25,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = -3175824100705406877L;
 	private JMenu menuLoader, menuSearcherType, menuNormalizerType;
 	private JMenuItem menuOpenIndex, menuOpenStopWords, menuLoad;
-	private JRadioButtonMenuItem rbMenuVectBasic, rbMenuVectPrefix, rbMenuVectPrefixExclusion;
+	private JRadioButtonMenuItem rbMenuVectBasic, rbMenuVectPrefix, rbMenuVectPrefixExclusion, rbMenuExtendedBoolean;
 	private JRadioButtonMenuItem rbMenuTokenizer, rbMenuStemmer;
 	private JFileChooser indexFileChooser, stopWordsFileChooser;
 	private String indexPath, stopWordsPath;
@@ -68,6 +68,11 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		groupSearcherType.add(rbMenuVectPrefixExclusion);
 		menuSearcherType.add(rbMenuVectPrefixExclusion);
 
+		rbMenuExtendedBoolean = new JRadioButtonMenuItem("Modèle booléen étendu");
+		rbMenuExtendedBoolean.addActionListener(this);
+		groupSearcherType.add(rbMenuExtendedBoolean);
+		menuSearcherType.add(rbMenuExtendedBoolean);
+
 		menuNormalizerType = new JMenu("Type de normaliseur");
 		ButtonGroup groupNormalizerType = new ButtonGroup();
 		rbMenuTokenizer = new JRadioButtonMenuItem("Tokenizer");
@@ -95,7 +100,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
 		indexPath = "";
 		stopWordsPath = "";
-		
+
 		isModifiedIndex = false;
 		isModifiedNormalizer = false;
 		isModifiedSearcher = false;
@@ -155,29 +160,33 @@ public class MenuBar extends JMenuBar implements ActionListener {
 				if (!indexPath.equals(""))
 					menuLoad.setEnabled(true);
 			}
-		} else if(arg0.getSource() == menuLoad) {
+		} else if (arg0.getSource() == menuLoad) {
 			isModifiedIndex = false;
 			isModifiedNormalizer = false;
 			isModifiedSearcher = false;
 			isModifiedStopWords = false;
 		} else if (arg0.getSource() == rbMenuVectBasic) {
-			if(searcherType != SearcherType.VECT_BASIC)
+			if (searcherType != SearcherType.VECT_BASIC)
 				isModifiedSearcher = true;
 			searcherType = SearcherType.VECT_BASIC;
 		} else if (arg0.getSource() == rbMenuVectPrefix) {
-			if(searcherType != SearcherType.VECT_PREFIX)
+			if (searcherType != SearcherType.VECT_PREFIX)
 				isModifiedSearcher = true;
 			searcherType = SearcherType.VECT_PREFIX;
 		} else if (arg0.getSource() == rbMenuVectPrefixExclusion) {
-			if(searcherType != SearcherType.VECT_PREFIX_EXCLUSION)
+			if (searcherType != SearcherType.VECT_PREFIX_EXCLUSION)
 				isModifiedSearcher = true;
 			searcherType = SearcherType.VECT_PREFIX_EXCLUSION;
+		} else if (arg0.getSource() == rbMenuExtendedBoolean) {
+			if (searcherType != SearcherType.EXTENDED_BOOLEAN)
+				isModifiedSearcher = true;
+			searcherType = SearcherType.EXTENDED_BOOLEAN;
 		} else if (arg0.getSource() == rbMenuTokenizer) {
-			if(normalizerType != NormalizerType.TOKENIZER)
+			if (normalizerType != NormalizerType.TOKENIZER)
 				isModifiedNormalizer = true;
 			normalizerType = NormalizerType.TOKENIZER;
 		} else if (arg0.getSource() == rbMenuStemmer) {
-			if(normalizerType != NormalizerType.STEMMER)
+			if (normalizerType != NormalizerType.STEMMER)
 				isModifiedNormalizer = true;
 			normalizerType = NormalizerType.STEMMER;
 		}

@@ -1,4 +1,4 @@
-package searcher;
+package searcher.vectormodel;
 
 import index.Document;
 import index.Index;
@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import searcher.Result;
+import searcher.Searcher;
 import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
 

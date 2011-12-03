@@ -7,15 +7,18 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import searcher.extendedbooleanmodel.SearcherExtendBooleanModel;
+import searcher.vectormodel.SearcherVectorModel;
+import searcher.vectormodel.SearcherVectorModelPrefix;
+import searcher.vectormodel.SearcherVectorModelPrefixWordsExclusion;
 import tools.normalizer.FrenchStemmer;
 import tools.normalizer.FrenchTokenizer;
 import tools.normalizer.Normalizer;
 import tools.weigher.WeigherTfIdf;
-import tools.weigher.WeigherTfIdfNorm;
-import view.SearcherFrame;
+
 import view.MenuBar.NormalizerType;
 import view.MenuBar.SearcherType;
-
+import view.SearcherFrame;
 
 public class SearcherMain implements ActionListener {
 
@@ -28,7 +31,7 @@ public class SearcherMain implements ActionListener {
 		searcherFrame = new SearcherFrame();
 		searcherFrame.getButtonSearcher().addActionListener(this);
 		searcherFrame.getMenuLoad().addActionListener(this);
-		
+
 		normalizer = null;
 		index = null;
 	}
@@ -48,8 +51,7 @@ public class SearcherMain implements ActionListener {
 			NormalizerType normalizerType = searcherFrame.getNormalizerType();
 
 			try {
-				if(searcherFrame.isModifiedNormalizer() || searcherFrame.isModifiedStopWords())
-				{
+				if (searcherFrame.isModifiedNormalizer() || searcherFrame.isModifiedStopWords()) {
 					// Création du normlizer
 					switch (normalizerType) {
 					case TOKENIZER:
@@ -60,19 +62,18 @@ public class SearcherMain implements ActionListener {
 						break;
 					}
 				}
-				
-				if(searcherFrame.isModifiedIndex())
-				{
+
+				if (searcherFrame.isModifiedIndex()) {
 					long t1 = System.nanoTime();
 					// Chargement de l'index depuis un fichier
 					index = Index.load(indexPath);
-	
+
 					long t2 = System.nanoTime();
 					System.out.println("Temps de désérialisation : " + (t2 - t1) / 1000000.);
 				}
 
-				if(searcherFrame.isModifiedSearcher() || searcherFrame.isModifiedIndex() || searcherFrame.isModifiedStopWords() || searcherFrame.isModifiedNormalizer())
-				{
+				if (searcherFrame.isModifiedSearcher() || searcherFrame.isModifiedIndex()
+						|| searcherFrame.isModifiedStopWords() || searcherFrame.isModifiedNormalizer()) {
 					long t1 = System.nanoTime();
 					// Création du searcher
 					switch (searcherType) {
@@ -84,6 +85,9 @@ public class SearcherMain implements ActionListener {
 						break;
 					case VECT_PREFIX_EXCLUSION:
 						searcher = new SearcherVectorModelPrefixWordsExclusion(normalizer, new WeigherTfIdf(), index);
+						break;
+					case EXTENDED_BOOLEAN:
+						searcher = new SearcherExtendBooleanModel(normalizer, index);
 						break;
 					}
 					long t2 = System.nanoTime();
@@ -97,11 +101,17 @@ public class SearcherMain implements ActionListener {
 		} else if (arg0.getSource() == searcherFrame.getButtonSearcher()) {
 			String request = searcherFrame.getRequest();
 			if (!request.equals("")) {
-				long t1 = System.nanoTime();
-				LinkedList<Result> results = searcher.search(request, true, Searcher.ALL_RESULTS);
-				long t2 = System.nanoTime();
-				System.out.println("Temps de la recherche : " + (t2 - t1) / 1000000.);
-				searcherFrame.displayResults(results);
+				try {
+					long t1 = System.nanoTime();
+					LinkedList<Result> results;
+					results = searcher.search(request, true, Searcher.ALL_RESULTS);
+					long t2 = System.nanoTime();
+					System.out.println("Temps de la recherche : " + (t2 - t1) / 1000000.);
+					searcherFrame.displayResults(results);
+				} catch (InvalideQueryException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}

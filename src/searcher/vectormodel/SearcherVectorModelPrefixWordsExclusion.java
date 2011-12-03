@@ -1,4 +1,4 @@
-package searcher;
+package searcher.vectormodel;
 
 import index.Document;
 import index.Index;
