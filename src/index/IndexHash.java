@@ -1,6 +1,7 @@
 package index;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,12 +46,20 @@ public class IndexHash extends Index {
 
 	@Override
 	public int getNbDocumentsTerm(String term) {
-		return index.get(term).size();
+		try {
+			return index.get(term).size();
+		} catch (NullPointerException e) {
+			return 0;
+		}
 	}
 
 	@Override
 	public int getNbOccurrencesTermDocument(String term, Document document) {
-		return index.get(term).get(document).getNbOccurrences();
+		try {
+			return index.get(term).get(document).getNbOccurrences();
+		} catch (NullPointerException e) {
+			return 0;
+		}
 	}
 
 	@Override
@@ -69,7 +78,11 @@ public class IndexHash extends Index {
 
 	@Override
 	public Set<Document> getDocumentsTerm(String term) {
-		return index.get(term).keySet();
+		try {
+			return index.get(term).keySet();
+		} catch (NullPointerException e) {
+			return new HashSet<Document>();
+		}
 	}
 
 	@Override
