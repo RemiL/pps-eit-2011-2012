@@ -12,7 +12,8 @@ import tools.normalizer.Normalizer;
 public abstract class AndOrQuery extends Query {
 	protected ArrayList<Query> subQueries;
 
-	public AndOrQuery(String query, Normalizer normalizer, boolean ignoreStopWords) throws InvalideQueryException {
+	public AndOrQuery(String query, Normalizer normalizer, boolean ignoreStopWords, Index index)
+			throws InvalideQueryException {
 		subQueries = new ArrayList<Query>();
 
 		Query subQuery;
@@ -24,7 +25,7 @@ public abstract class AndOrQuery extends Query {
 			case ',':
 				if (groupEndNeeded == 0) {
 					try {
-						subQuery = parse(query.substring(start, i), normalizer, ignoreStopWords);
+						subQuery = parse(query.substring(start, i), normalizer, ignoreStopWords, index);
 
 						subQueries.add(subQuery);
 					} catch (EmptyQueryException e) {
@@ -32,7 +33,7 @@ public abstract class AndOrQuery extends Query {
 						// disparaitre si la suppression des mots vides est
 						// activée.
 					}
-					
+
 					start = i + 1;
 				}
 				break;
@@ -44,9 +45,9 @@ public abstract class AndOrQuery extends Query {
 				break;
 			}
 		}
-		
+
 		try {
-			subQuery = parse(query.substring(start, query.length()), normalizer, ignoreStopWords);
+			subQuery = parse(query.substring(start, query.length()), normalizer, ignoreStopWords, index);
 
 			subQueries.add(subQuery);
 		} catch (EmptyQueryException e) {
