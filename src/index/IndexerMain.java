@@ -28,7 +28,7 @@ public class IndexerMain {
 			System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
 			// Exporte l'index
-			index.export("indexSansMotsVides2.ser");
+			index.export("indexSansMotsVides3.ser");
 
 			long t3 = System.nanoTime();
 			System.out.println("Temps de sérialisation : " + (t3 - t2) / 1000000.);

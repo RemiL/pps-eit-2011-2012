@@ -10,6 +10,8 @@ public class Document implements Serializable {
 	private static final long serialVersionUID = 2590642121208114450L;
 	/** L'url du document */
 	private String url;
+	/** Le chemin vers le fichier dans le répertoire corpus */
+	private String path;
 	/** Le titre du document */
 	private String title;
 	/** La norme du vecteur représentant le document */
@@ -30,8 +32,9 @@ public class Document implements Serializable {
 	 * @param title
 	 *            le titre du document
 	 */
-	protected Document(String url, String title) {
+	protected Document(String url, String path, String title) {
 		this.url = url;
+		this.path = path;
 		this.title = title;
 	}
 
@@ -52,6 +55,25 @@ public class Document implements Serializable {
 	 */
 	protected void setUrl(String url) {
 		this.url = url;
+	}
+
+	
+	/**
+	 * Retourne le chemin du document
+	 * @return le chemin du document
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * Modifie le chemin du document.
+	 * 
+	 * @param path
+	 *            le nouveau chemin du document
+	 */
+	protected void setPath(String path) {
+		this.path = path;
 	}
 
 	/**
