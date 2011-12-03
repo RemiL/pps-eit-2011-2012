@@ -43,14 +43,24 @@ public class SearcherExtendBooleanModel extends Searcher {
 		LinkedList<Result> results = new LinkedList<Result>();
 		Set<Document> documents = new HashSet<Document>();
 
+		String requests[] = request.split("\\|");
+
 		Query query;
 		try {
-			query = Query.parse(request, normalizer, ignoreStopWords);
+			query = Query.parse(requests[0], normalizer, ignoreStopWords);
 		} catch (EmptyQueryException e) {
 			throw new InvalideQueryException(request);
 		}
 
 		query.getRelatedDocuments(index, documents);
+
+		if (requests.length > 1) {
+			Query excludeQuery = new ExcludeQuery(requests[1], normalizer, ignoreStopWords);
+			Set<Document> excludedDocuments = new HashSet<Document>();
+			excludeQuery.getRelatedDocuments(index, excludedDocuments);
+
+			documents.removeAll(excludedDocuments);
+		}
 
 		double similarity;
 		for (Document doc : documents) {
