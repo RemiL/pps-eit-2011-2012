@@ -44,7 +44,8 @@ public abstract class Searcher {
 	 * @param ignoreStopWords
 	 *            indique si les mots vides doivent être ignorés
 	 * @param nbResults
-	 *            le nombre de résultats à retourner. ALL_RESULTS pour tous les résultats.
+	 *            le nombre de résultats à retourner. ALL_RESULTS pour tous les
+	 *            résultats.
 	 * @return une liste de documents triée du plus pertinant au moins pertinant
 	 */
 	public abstract LinkedList<Result> search(String request, boolean ignoreStopWords, int nbResults);

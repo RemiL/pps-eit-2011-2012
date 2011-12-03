@@ -16,11 +16,11 @@ public class ResultPanel extends JPanel {
 		this.setBorder(new LineBorder(Color.BLACK));
 		
 		if(!title.equals(""))
-			this.add(new JLabel(title));
+			this.add(new JLabel("Titre : " + title));
 		else
-			this.add(new JLabel("PAS DE TITRE"));			
-		this.add(new JLabel(url));
-		this.add(new JLabel(path));
+			this.add(new JLabel("Titre : PAS DE TITRE"));			
+		this.add(new JLabel("URL : " + url));
+		this.add(new JLabel("Chemin local : " + path));
 		this.add(new JLabel("Pertinence : " + pertinence));
 	}
 }

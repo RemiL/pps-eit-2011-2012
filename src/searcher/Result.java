@@ -50,9 +50,9 @@ public class Result implements Comparable<Result> {
 		int res = 0;
 
 		if (pertinence < resultat.pertinence) {
-			res = -1;
-		} else if (pertinence > resultat.pertinence) {
 			res = 1;
+		} else if (pertinence > resultat.pertinence) {
+			res = -1;
 		}
 
 		return res;
