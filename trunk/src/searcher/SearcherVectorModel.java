@@ -180,7 +180,7 @@ public class SearcherVectorModel extends Searcher {
 		// On ne conserve que le nombre désiré de résultats
 		if (nbResultats != ALL_RESULTS && results.size() > nbResultats) {
 			for (int i = results.size() - nbResultats; i > 0; i--) {
-				results.removeFirst();
+				results.removeLast();
 			}
 		}
 	}

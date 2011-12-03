@@ -3,6 +3,7 @@ package view;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -18,9 +19,16 @@ public class ResultsPanel extends JScrollPane {
 
 	public void displayResults(LinkedList<Result> results) {
 		JPanel pan = new JPanel();
-		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
-		for (Result result : results) {
-			pan.add(new ResultPanel(result.getDocument().getTitle(), result.getDocument().getUrl(), result.getDocument().getPath(), result.getPertinence()));
+		if(results.size() != 0)
+		{
+			pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
+			for (Result result : results) {
+				pan.add(new ResultPanel(result.getDocument().getTitle(), result.getDocument().getUrl(), result.getDocument().getPath(), result.getPertinence()));
+			}
+		}
+		else
+		{
+			pan.add(new JLabel("Aucun résultat"));
 		}
 		this.setViewportView(pan);
 	}
