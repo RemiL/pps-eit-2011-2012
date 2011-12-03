@@ -69,6 +69,8 @@ public class TextIndexer extends Indexer {
 	 *             si la lecture du document échoue
 	 */
 	private String loadDocument(String fileName, String encoding, Document document) throws IOException {
+		document.setPath(fileName);
+		
 		// On cherche la taille du fichier pour éviter d'avoir à réallouer le
 		// contenu au fur et à mesure lors de la lecture du fichier.
 		File file = new File(fileName);
