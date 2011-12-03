@@ -25,15 +25,15 @@ public interface Weigher {
 	public double calculateWeight(String term, Document document, Index index);
 
 	/**
-	 * Calcule le poids d'un terme dans un document.
+	 * Calcule le poids d'un terme dans une requête.
 	 * 
 	 * @param word
 	 *            le terme
-	 * @param wordsDoc
-	 *            la liste des termes du document
+	 * @param wordsQuery
+	 *            la liste des termes de la requête
 	 * @param index
 	 *            l'index à considérer
 	 * @return le poids du terme dans le document
 	 */
-	public double calculateWeight(String word, List<String> wordsDoc, Index index);
+	public double calculateQueryWeight(String word, List<String> wordsQuery, Index index);
 }

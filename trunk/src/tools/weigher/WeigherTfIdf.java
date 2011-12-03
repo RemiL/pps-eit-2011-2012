@@ -18,8 +18,8 @@ public class WeigherTfIdf implements Weigher {
 	}
 
 	@Override
-	public double calculateWeight(String word, List<String> wordsDoc, Index index) {
-		return Collections.frequency(wordsDoc, word)
-				* Math.log10((double) index.getNbDocuments() / index.getNbDocumentsTerm(word));
+	public double calculateQueryWeight(String word, List<String> wordsQuery, Index index) {
+		return Collections.frequency(wordsQuery, word)
+				* Math.log10((double) (index.getNbDocuments() + 1) / (index.getNbDocumentsTerm(word) + 1));
 	}
 }
