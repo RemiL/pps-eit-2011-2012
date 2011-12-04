@@ -1,4 +1,4 @@
-package view;
+package searcher.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import searcher.Result;
-import view.MenuBar.NormalizerType;
-import view.MenuBar.SearcherType;
+import searcher.view.MenuBar.NormalizerType;
+import searcher.view.MenuBar.SearcherType;
 
 public class SearcherFrame extends JFrame {
 	private static final long serialVersionUID = -1317739677659226928L;
@@ -84,15 +84,15 @@ public class SearcherFrame extends JFrame {
 	public boolean isModifiedSearcher() {
 		return menuBar.isModifiedSearcher();
 	}
-	
+
 	public boolean isModifiedNormalizer() {
 		return menuBar.isModifiedNormalizer();
 	}
-	
+
 	public boolean isModifiedIndex() {
 		return menuBar.isModifiedIndex();
 	}
-	
+
 	public boolean isModifiedStopWords() {
 		return menuBar.isModifiedStopWords();
 	}

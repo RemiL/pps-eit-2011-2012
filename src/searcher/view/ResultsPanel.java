@@ -1,4 +1,4 @@
-package view;
+package searcher.view;
 
 import java.util.LinkedList;
 
@@ -19,15 +19,13 @@ public class ResultsPanel extends JScrollPane {
 
 	public void displayResults(LinkedList<Result> results) {
 		JPanel pan = new JPanel();
-		if(results.size() != 0)
-		{
+		if (results.size() != 0) {
 			pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
-			for (Result result : results) {
-				pan.add(new ResultPanel(result.getDocument().getTitle(), result.getDocument().getUrl(), result.getDocument().getPath(), result.getPertinence()));
+			for (int i = 0; i < results.size(); i++) {
+				pan.add(new ResultPanel(i + 1, results.get(i).getDocument().getTitle(), results.get(i).getDocument()
+						.getUrl(), results.get(i).getDocument().getPath(), results.get(i).getPertinence()));
 			}
-		}
-		else
-		{
+		} else {
 			pan.add(new JLabel("Aucun résultat"));
 		}
 		this.setViewportView(pan);

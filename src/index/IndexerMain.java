@@ -85,11 +85,11 @@ public class IndexerMain implements ActionListener {
 				String normalizerType = indexerFrame.getNormalizerType();
 				String savePath = saveFileChooser.getSelectedFile().getPath();
 				boolean useStopWords = false;
-				
+
 				System.out.println(savePath.endsWith(".ser"));
-				if(!savePath.endsWith(".ser"))
+				if (!savePath.endsWith(".ser"))
 					savePath += ".ser";
-					
+
 				try {
 					// Crée l'index
 					if (indexerType.equals("Indexer de texte")) {
@@ -109,20 +109,16 @@ public class IndexerMain implements ActionListener {
 					}
 
 					if (normalizerType.equals("Tokenizer")) {
-						if (!stopWordsPath.equals(""))
-						{
+						if (!stopWordsPath.equals("")) {
 							normalizer = new FrenchTokenizer("frenchST.txt", "UTF-8");
 							useStopWords = true;
-						}
-						else
+						} else
 							normalizer = new FrenchTokenizer();
 					} else if (normalizerType.equals("Stemmer")) {
-						if (!stopWordsPath.equals(""))
-						{
+						if (!stopWordsPath.equals("")) {
 							normalizer = new FrenchStemmer("frenchST.txt", "UTF-8");
 							useStopWords = true;
-						}
-						else
+						} else
 							normalizer = new FrenchStemmer();
 					}
 
@@ -145,7 +141,7 @@ public class IndexerMain implements ActionListener {
 			}
 		}
 	}
-	
+
 	class IndexFilter extends FileFilter {
 
 		@Override

@@ -26,6 +26,7 @@ public class SearcherMain implements ActionListener {
 	private Searcher searcher;
 	private Index index;
 	private Normalizer normalizer;
+	private boolean ignoreStopWords;
 
 	public SearcherMain() {
 		searcherFrame = new SearcherFrame();
@@ -47,15 +48,26 @@ public class SearcherMain implements ActionListener {
 			SearcherType searcherType = searcherFrame.getSearcherType();
 			NormalizerType normalizerType = searcherFrame.getNormalizerType();
 
+			if (stopWordsPath.equals(""))
+				ignoreStopWords = false;
+			else
+				ignoreStopWords = true;
+
 			try {
 				if (searcherFrame.isModifiedNormalizer() || searcherFrame.isModifiedStopWords()) {
 					// Création du normlizer
 					switch (normalizerType) {
 					case TOKENIZER:
-						normalizer = new FrenchTokenizer(stopWordsPath, "UTF-8");
+						if (ignoreStopWords)
+							normalizer = new FrenchTokenizer(stopWordsPath, "UTF-8");
+						else
+							normalizer = new FrenchTokenizer();
 						break;
 					case STEMMER:
-						normalizer = new FrenchStemmer(stopWordsPath, "UTF-8");
+						if (ignoreStopWords)
+							normalizer = new FrenchStemmer(stopWordsPath, "UTF-8");
+						else
+							normalizer = new FrenchStemmer();
 						break;
 					}
 				}
@@ -101,7 +113,7 @@ public class SearcherMain implements ActionListener {
 				try {
 					long t1 = System.nanoTime();
 					LinkedList<Result> results;
-					results = searcher.search(request, true, Searcher.ALL_RESULTS);
+					results = searcher.search(request, ignoreStopWords, Searcher.ALL_RESULTS);
 					long t2 = System.nanoTime();
 					System.out.println("Temps de la recherche : " + (t2 - t1) / 1000000.);
 					searcherFrame.displayResults(results);
