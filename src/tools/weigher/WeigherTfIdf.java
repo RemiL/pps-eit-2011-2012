@@ -3,7 +3,6 @@ package tools.weigher;
 import index.Document;
 import index.Index;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ public class WeigherTfIdf implements Weigher {
 
 	@Override
 	public double calculateQueryWeight(String word, List<String> wordsQuery, Index index) {
-		return Collections.frequency(wordsQuery, word)
-				* Math.log10((double) (index.getNbDocuments() + 1) / (index.getNbDocumentsTerm(word) + 1));
+		return Math.log10((double) (index.getNbDocuments() + 1) / (index.getNbDocumentsTerm(word) + 1));
 	}
 }
