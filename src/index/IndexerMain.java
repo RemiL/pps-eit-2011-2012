@@ -16,6 +16,7 @@ import tools.normalizer.FrenchTokenizer;
 import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
 import tools.weigher.WeigherTfIdf;
+import tools.weigher.WeigherTfIdfLog;
 import tools.weigher.WeigherTfIdfNorm;
 
 /**
@@ -125,6 +126,8 @@ public class IndexerMain implements ActionListener {
 					// Crée le pondérateur
 					if (weigherType.equals("Tf.Idf")) {
 						weigher = new WeigherTfIdf();
+					} else if (weigherType.equals("Tf.Idf avec log(Tf)")) {
+						weigher = new WeigherTfIdfLog();
 					} else if (weigherType.equals("Tf.Idf normalisé")) {
 						weigher = new WeigherTfIdfNorm();
 					}

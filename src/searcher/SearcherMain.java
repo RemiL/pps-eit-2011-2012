@@ -14,8 +14,11 @@ import searcher.vectormodel.SearcherVectorModelPrefixWordsExclusion;
 import tools.normalizer.FrenchStemmer;
 import tools.normalizer.FrenchTokenizer;
 import tools.normalizer.Normalizer;
+import tools.weigher.Weigher;
 import tools.weigher.WeigherTfIdf;
+import tools.weigher.WeigherTfIdfLog;
 
+import searcher.view.MenuBar.WeigherType;
 import searcher.view.SearcherFrame;
 import searcher.view.MenuBar.NormalizerType;
 import searcher.view.MenuBar.SearcherType;
@@ -31,6 +34,8 @@ public class SearcherMain implements ActionListener {
 	private Searcher searcher;
 	/** L'index */
 	private Index index;
+	/** Le pondérateur */
+	private Weigher weigher;
 	/** Le normaliseur */
 	private Normalizer normalizer;
 	/** Faut-il supprimer les mots vides */
@@ -61,6 +66,7 @@ public class SearcherMain implements ActionListener {
 			// Tous les paramètres sont lus
 			String indexPath = searcherFrame.getIndexPath();
 			String stopWordsPath = searcherFrame.getStopWordsPath();
+			WeigherType weigherType = searcherFrame.getWeigherType();
 			SearcherType searcherType = searcherFrame.getSearcherType();
 			NormalizerType normalizerType = searcherFrame.getNormalizerType();
 
@@ -90,6 +96,18 @@ public class SearcherMain implements ActionListener {
 						break;
 					}
 				}
+				
+				if (searcherFrame.isModifiedWeigher()) {
+					// Création du pondérateur
+					switch (weigherType) {
+					case TF_IDF:
+						weigher = new WeigherTfIdf();
+						break;
+					case TF_IDF_LOG:
+						weigher = new WeigherTfIdfLog();
+						break;
+					}
+				}
 
 				// Si le fichier d'index est modifié
 				if (searcherFrame.isModifiedIndex()) {
@@ -105,18 +123,18 @@ public class SearcherMain implements ActionListener {
 
 				// Si un des paramètres est modifié, il faut recréer le searcher
 				if (searcherFrame.isModifiedSearcher() || searcherFrame.isModifiedIndex()
-						|| searcherFrame.isModifiedStopWords() || searcherFrame.isModifiedNormalizer()) {
+						|| searcherFrame.isModifiedStopWords() || searcherFrame.isModifiedNormalizer() || searcherFrame.isModifiedWeigher()) {
 					long t1 = System.nanoTime();
 					// Création du searcher
 					switch (searcherType) {
 					case VECT_BASIC:
-						searcher = new SearcherVectorModel(normalizer, new WeigherTfIdf(), index);
+						searcher = new SearcherVectorModel(normalizer, weigher, index);
 						break;
 					case VECT_PREFIX:
-						searcher = new SearcherVectorModelPrefix(normalizer, new WeigherTfIdf(), index);
+						searcher = new SearcherVectorModelPrefix(normalizer, weigher, index);
 						break;
 					case VECT_PREFIX_EXCLUSION:
-						searcher = new SearcherVectorModelPrefixWordsExclusion(normalizer, new WeigherTfIdf(), index);
+						searcher = new SearcherVectorModelPrefixWordsExclusion(normalizer, weigher, index);
 						break;
 					case EXTENDED_BOOLEAN:
 						searcher = new SearcherExtendBooleanModel(normalizer, index);
