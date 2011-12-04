@@ -36,8 +36,7 @@ public abstract class Normalizer {
 	 * @throws IOException
 	 *             si la lecture du fichier dont le nom est fourni échoue
 	 */
-	public Normalizer(String stopWordFileName, String encoding)
-			throws IOException {
+	public Normalizer(String stopWordFileName, String encoding) throws IOException {
 		stopWords = new HashSet<String>();
 
 		// lecture du fichier texte
@@ -76,6 +75,5 @@ public abstract class Normalizer {
 	 * @return la liste d'unités lexicales contenues dans le texte spécifié en
 	 *         appliquant une normalisation
 	 */
-	public abstract ArrayList<String> normalize(String text,
-			boolean removeStopWords);
+	public abstract ArrayList<String> normalize(String text, boolean removeStopWords);
 }

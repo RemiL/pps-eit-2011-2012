@@ -34,7 +34,7 @@ public class FrenchTokenizer extends Normalizer {
 	 *             si la lecture du fichier dont le nom est fourni échoue
 	 */
 	public FrenchTokenizer(String stopWordFileName, String encoding) throws IOException {
-		super();
+		super(stopWordFileName, encoding);
 		this.transducer = new FrenchTokenizerAutomaton();
 	}
 
