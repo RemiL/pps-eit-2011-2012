@@ -173,7 +173,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 			}
 		}
 		// Si le bouton pour ouvrir le répertoire à indexer est cliqué
-		if (e.getSource() == buttonOpenDirectory) {
+		else if (e.getSource() == buttonOpenDirectory) {
 			// Ouvre une boite de dialogue pour choisir le fichier ou le répertoire
 			directoryChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			int retval = directoryChooser.showOpenDialog(IndexerFrame.this);
