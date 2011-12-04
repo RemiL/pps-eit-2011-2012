@@ -193,12 +193,13 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
 		@Override
 		public boolean accept(File f) {
-			return f.isDirectory() || f.getName().toLowerCase().endsWith(".ser");
+			return f.isDirectory() || f.getName().toLowerCase().endsWith(".index")
+					|| f.getName().toLowerCase().endsWith(".zindex");
 		}
 
 		@Override
 		public String getDescription() {
-			return "Fichiers .ser";
+			return "Fichiers d'index (.index, .zindex)";
 		}
 
 	}

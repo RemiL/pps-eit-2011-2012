@@ -75,7 +75,7 @@ public class SearcherMain implements ActionListener {
 				if (searcherFrame.isModifiedIndex()) {
 					long t1 = System.nanoTime();
 					// Chargement de l'index depuis un fichier
-					index = Index.load(indexPath);
+					index = Index.load(indexPath, indexPath.endsWith(".zindex"));
 
 					long t2 = System.nanoTime();
 					System.out.println("Temps de désérialisation : " + (t2 - t1) / 1000000.);

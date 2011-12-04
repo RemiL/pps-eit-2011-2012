@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Un index abstrait
@@ -181,8 +183,9 @@ public abstract class Index implements Serializable {
 	public abstract void updateMinDocsCountByTerm();
 
 	/**
-	 * Charge un index depuis un fichier dont le nom est fourni. Cette méthode
-	 * retourne null si le fichier indiqué ne correspondait pas à un index.
+	 * Charge un index depuis un fichier non compressé dont le nom est fourni.
+	 * Cette méthode retourne null si le fichier indiqué ne correspondait pas à
+	 * un index.
 	 * 
 	 * @param fileName
 	 *            le nom du fichier depuis lequel l'index doit être chargé.
@@ -192,9 +195,33 @@ public abstract class Index implements Serializable {
 	 *         correspondait pas à un index.
 	 */
 	public static Index load(String fileName) throws IOException {
+		return load(fileName, false);
+	}
+
+	/**
+	 * Charge un index depuis un fichier compressé ou non dont le nom est
+	 * fourni. Cette méthode retourne null si le fichier indiqué ne
+	 * correspondait pas à un index.
+	 * 
+	 * @param fileName
+	 *            le nom du fichier depuis lequel l'index doit être chargé.
+	 * @param compressed
+	 *            indique si le fichier depuis lequel l'index doit être chargé
+	 *            est compressé.
+	 * @throws IOException
+	 *             si la lecture du fichier a échoué.
+	 * @return l'index chargé depuis le fichier ou null si le fichier ne
+	 *         correspondait pas à un index.
+	 */
+	public static Index load(String fileName, boolean compressed) throws IOException {
 		FileInputStream fis = new FileInputStream(fileName);
 		BufferedInputStream bis = new BufferedInputStream(fis);
-		ObjectInputStream ois = new ObjectInputStream(bis);
+		ObjectInputStream ois;
+		if (compressed) {
+			ois = new ObjectInputStream(new GZIPInputStream(bis));
+		} else {
+			ois = new ObjectInputStream(bis);
+		}
 
 		try {
 			return (Index) ois.readObject();
@@ -204,7 +231,7 @@ public abstract class Index implements Serializable {
 	}
 
 	/**
-	 * Exporte l'index dans un fichier dont le nom est fourni.
+	 * Exporte l'index dans un fichier non compressé dont le nom est fourni.
 	 * 
 	 * @param fileName
 	 *            le nom du fichier dans lequel l'index doit être sauvegardé.
@@ -212,9 +239,30 @@ public abstract class Index implements Serializable {
 	 *             si l'écriture du fichier a échoué.
 	 */
 	public void export(String fileName) throws IOException {
+		export(fileName, false);
+	}
+
+	/**
+	 * Exporte l'index dans un fichier (compressé ou non) dont le nom est
+	 * fourni.
+	 * 
+	 * @param fileName
+	 *            le nom du fichier dans lequel l'index doit être sauvegardé.
+	 * @param compressed
+	 *            indique si le fichier dans lequel l'index doit être sauvegardé
+	 *            est compressé.
+	 * @throws IOException
+	 *             si l'écriture du fichier a échoué.
+	 */
+	public void export(String fileName, boolean compressed) throws IOException {
 		FileOutputStream fos = new FileOutputStream(fileName);
 		BufferedOutputStream bos = new BufferedOutputStream(fos);
-		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		ObjectOutputStream oos;
+		if (compressed) {
+			oos = new ObjectOutputStream(new GZIPOutputStream(bos));
+		} else {
+			oos = new ObjectOutputStream(bos);
+		}
 		oos.writeObject(this);
 		oos.close();
 	}
