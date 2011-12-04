@@ -20,8 +20,13 @@ import tools.normalizer.Normalizer;
  * <li>AND(req1, req2, ..., reqN)</li>
  * <li>OR(req1, req2, ..., reqN)</li>
  * <li>NOT(req1)</li>
- * où req sont des termes ou des sous-requêtes.
  * </ul>
+ * où req sont des termes ou des sous-requêtes. Dans le cas des requêtes AND et
+ * OR, il est possible d'utiliser la recherche par préfixe en utilisant la
+ * notation "préfixe*" qui sera remplacée par une requête OR contenant tous les
+ * termes possédant le préfixe désiré. A la fin de la requête, il est possible
+ * d'ajouter "| EXCLUDE(t1, t2, ...)" pour exclure strictement un certain nombre
+ * de mots.
  */
 public class SearcherExtendBooleanModel extends Searcher {
 	/**
@@ -43,25 +48,31 @@ public class SearcherExtendBooleanModel extends Searcher {
 		LinkedList<Result> results = new LinkedList<Result>();
 		Set<Document> documents = new HashSet<Document>();
 
+		// On sépare les deux parties de la requête.
 		String requests[] = request.split("\\|");
 
+		// On analyse la première partie de la requête.
 		Query query;
 		try {
 			query = Query.parse(requests[0], normalizer, ignoreStopWords, index);
 		} catch (EmptyQueryException e) {
 			throw new InvalideQueryException(request);
 		}
-
+		// On récupère les documents concernés par la requête.
 		query.getRelatedDocuments(index, documents);
 
+		// Si on a une deuxième partie à la requête, on l'analyse.
 		if (requests.length > 1) {
 			Query excludeQuery = new ExcludeQuery(requests[1], normalizer, ignoreStopWords);
 			Set<Document> excludedDocuments = new HashSet<Document>();
+			// On récupère les documents concernés par cette partie
 			excludeQuery.getRelatedDocuments(index, excludedDocuments);
-
+			// et on les exclut de la recherche.
 			documents.removeAll(excludedDocuments);
 		}
 
+		// On calcule la similarité pour tous les
+		// documents concernés encore présents.
 		double similarity;
 		for (Document doc : documents) {
 			similarity = query.calculateSimilarity(index, doc);
