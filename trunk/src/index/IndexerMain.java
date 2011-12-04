@@ -23,17 +23,30 @@ import tools.weigher.WeigherTfIdfNorm;
  */
 public class IndexerMain implements ActionListener {
 
+	/** La fenêtre */
 	private IndexerFrame indexerFrame;
+	/** L'indexer */
 	private Indexer indexer;
+	/** L'index */
 	private Index index;
+	/** Le pondérateur */
 	private Weigher weigher;
+	/** La boite de dialogue pour choisir le chemin de la sauvegarde de l'index */
 	private JFileChooser saveFileChooser;
+	/** Le nomaliseur */
 	private Normalizer normalizer;
 
+	/**
+	 * Affiche une fenêtre pour indexer
+	 */
 	public IndexerMain() {
+		// Crée une fenêtre
 		indexerFrame = new IndexerFrame();
+		// Ecoute le bouton Indexer
 		indexerFrame.getButtonSave().addActionListener(this);
+		// Positionne la boite de dialogue dans le répertoire courant
 		saveFileChooser = new JFileChooser(".");
+		// Ajoute le filtre de fichier à la boite de dialogue
 		saveFileChooser.setFileFilter(new IndexFilter());
 	}
 
@@ -51,7 +64,7 @@ public class IndexerMain implements ActionListener {
 	 *            le nom du répertoire
 	 * @return la liste des noms des fichiers d'un répertoire
 	 */
-	private static ArrayList<String> createListFiles(String dirName) {
+	private ArrayList<String> createListFiles(String dirName) {
 		ArrayList<String> listFiles = new ArrayList<String>();
 		File dir = new File(dirName);
 
@@ -74,9 +87,14 @@ public class IndexerMain implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		// Le bouton Indexer est cliqué
 		if (arg0.getSource() == indexerFrame.getButtonSave()) {
+			// On ouvre la boite de dialogue pour le choix du chemin de la
+			// sauvegarde
 			int retval = saveFileChooser.showSaveDialog(indexerFrame);
+			// Si un fichier est choisi
 			if (retval == JFileChooser.APPROVE_OPTION) {
+				// Tous les paramètres sont lus
 				String directoryPath = indexerFrame.getDirectoryPath();
 				String stopWordsPath = indexerFrame.getStopWordsPath();
 				String indexerType = indexerFrame.getIndexerType();
@@ -86,44 +104,57 @@ public class IndexerMain implements ActionListener {
 				String savePath = saveFileChooser.getSelectedFile().getPath();
 				boolean useStopWords = false;
 
+				// Si l'extention du fichier de sauvegarde n'est pas .index ou
+				// .zindex, on ajoute l'extention .index par défaut
 				if (!savePath.endsWith(".index") && !savePath.endsWith(".zindex"))
 					savePath += ".index";
 
 				try {
-					// Crée l'index
+					// Crée l'indexer
 					if (indexerType.equals("Indexer de texte")) {
 						indexer = new TextIndexer();
 					}
 
+					// Crée l'index
 					if (indexType.equals("IndexHash")) {
 						index = new IndexHash();
 					} else if (indexType.equals("IndexTree")) {
 						index = new IndexTree();
 					}
 
+					// Crée le pondérateur
 					if (weigherType.equals("Tf.Idf")) {
 						weigher = new WeigherTfIdf();
 					} else if (weigherType.equals("Tf.Idf normalisé")) {
 						weigher = new WeigherTfIdfNorm();
 					}
 
+					// crée le normaliseur
 					if (normalizerType.equals("Tokenizer")) {
+						// S'il y a une liste de mots vides
 						if (!stopWordsPath.equals("")) {
 							normalizer = new FrenchTokenizer("frenchST.txt", "UTF-8");
 							useStopWords = true;
 						} else
+							// S'il n'y a pas de mots vides
 							normalizer = new FrenchTokenizer();
 					} else if (normalizerType.equals("Stemmer")) {
+						// S'il y a une liste de mots vides
 						if (!stopWordsPath.equals("")) {
 							normalizer = new FrenchStemmer("frenchST.txt", "UTF-8");
 							useStopWords = true;
 						} else
+							// S'il n'y a pas de mots vides
 							normalizer = new FrenchStemmer();
 					}
 
+					// Crée la liste des fichiers à indexer
 					ArrayList<String> listFiles = createListFiles(directoryPath);
 					System.out.println("Nombre de fichiers à indexer : " + listFiles.size());
+
 					long t1 = System.nanoTime();
+
+					// Remplie l'index
 					indexer.index(listFiles, "UTF-8", index, normalizer, useStopWords, weigher);
 
 					long t2 = System.nanoTime();
@@ -141,6 +172,7 @@ public class IndexerMain implements ActionListener {
 		}
 	}
 
+	// Un filtre pour les fichiers .index et .zindex
 	class IndexFilter extends FileFilter {
 
 		@Override
