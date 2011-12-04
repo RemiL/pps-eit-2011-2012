@@ -11,10 +11,11 @@ public class WeigherTfIdfLog implements Weigher {
 	@Override
 	public double calculateWeight(String term, Document document, Index index) {
 		double logTf;
-		if (index.getNbOccurrencesTermDocument(term, document) == 0)
+		int occ = index.getNbOccurrencesTermDocument(term, document);
+		if (occ == 0)
 			logTf = 0;
 		else
-			logTf = Math.log10(index.getNbOccurrencesTermDocument(term, document)) + 1;
+			logTf = Math.log10(occ) + 1;
 		return logTf * Math.log10((double) index.getNbDocuments() / index.getNbDocumentsTerm(term));
 	}
 
