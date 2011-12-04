@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import searcher.Result;
 import searcher.view.MenuBar.NormalizerType;
 import searcher.view.MenuBar.SearcherType;
+import searcher.view.MenuBar.WeigherType;
 
 /**
  * Un affichage pour le searcher
@@ -104,6 +105,15 @@ public class SearcherFrame extends JFrame {
 	public SearcherType getSearcherType() {
 		return menuBar.getSearcherType();
 	}
+	
+	/**
+	 * Retourne le type de pondérateur
+	 * 
+	 * @return le type de pondérateur
+	 */
+	public WeigherType getWeigherType() {
+		return menuBar.getWeigherType();
+	}
 
 	/**
 	 * Retourne le bouton de chargement du searcher
@@ -148,6 +158,15 @@ public class SearcherFrame extends JFrame {
 	 */
 	public boolean isModifiedNormalizer() {
 		return menuBar.isModifiedNormalizer();
+	}
+	
+	/**
+	 * Retourne si le type de pondérateur a été modifié
+	 * 
+	 * @return true si le type de pondérateur est modifié, false sinon
+	 */
+	public boolean isModifiedWeigher() {
+		return menuBar.isModifiedWeigher();
 	}
 
 	/**

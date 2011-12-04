@@ -51,7 +51,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 		String[] indexerTypes = { "Indexer de texte" };
 		String[] indexTypes = { "IndexHash", "IndexTree" };
-		String[] weigherTypes = { "Tf.Idf", "Tf.Idf normalisé" };
+		String[] weigherTypes = { "Tf.Idf", "Tf.Idf avec log(Tf)", "Tf.Idf normalisé" };
 		String[] normalizerTypes = { "Tokenizer", "Stemmer" };
 
 		labelPanel.add(new JLabel("Répertoire à indexer : ", JLabel.RIGHT));

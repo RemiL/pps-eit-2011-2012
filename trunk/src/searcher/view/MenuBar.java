@@ -21,6 +21,11 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public enum SearcherType {
 		VECT_BASIC, VECT_PREFIX, VECT_PREFIX_EXCLUSION, EXTENDED_BOOLEAN
 	};
+	
+	/** La liste des types de pondérateur */
+	public enum WeigherType {
+		TF_IDF, TF_IDF_LOG, TF_IDF_NORM
+	};
 
 	/** La liste des types de normaliseur */
 	public enum NormalizerType {
@@ -28,18 +33,21 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	};
 
 	private static final long serialVersionUID = -3175824100705406877L;
-	private JMenu menuLoader, menuSearcherType, menuNormalizerType;
+	private JMenu menuLoader, menuSearcherType, menuNormalizerType, menuWeigherType;
 	private JMenuItem menuOpenIndex, menuOpenStopWords, menuLoad;
 	private JRadioButtonMenuItem rbMenuVectBasic, rbMenuVectPrefix, rbMenuVectPrefixExclusion, rbMenuExtendedBoolean;
 	private JRadioButtonMenuItem rbMenuTokenizer, rbMenuStemmer;
+	private JRadioButtonMenuItem rbMenuTfIdf, rbMenuTfIdfLog;
 	private JFileChooser indexFileChooser, stopWordsFileChooser;
 	private String indexPath, stopWordsPath;
 	private SearcherType searcherType;
 	private NormalizerType normalizerType;
+	private WeigherType weigherType;
 	private boolean isModifiedIndex;
 	private boolean isModifiedStopWords;
 	private boolean isModifiedSearcher;
 	private boolean isModifiedNormalizer;
+	private boolean isModifiedWeigher;
 
 	/** Crée une barre de menu */
 	public MenuBar() {
@@ -85,6 +93,22 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		rbMenuExtendedBoolean.addActionListener(this);
 		groupSearcherType.add(rbMenuExtendedBoolean);
 		menuSearcherType.add(rbMenuExtendedBoolean);
+		
+		// Un sous menu pour choisir le type de pondérateur
+		// Par défaut c'est le tf.idf
+		menuWeigherType = new JMenu("Type de pondérateur");
+		ButtonGroup groupWeigherType = new ButtonGroup();
+		rbMenuTfIdf = new JRadioButtonMenuItem("tf.idf");
+		rbMenuTfIdf.setSelected(true);
+		weigherType = WeigherType.TF_IDF;
+		rbMenuTfIdf.addActionListener(this);
+		groupWeigherType.add(rbMenuTfIdf);
+		menuWeigherType.add(rbMenuTfIdf);
+		
+		rbMenuTfIdfLog = new JRadioButtonMenuItem("tf.idf log(tf)");
+		rbMenuTfIdfLog.addActionListener(this);
+		groupWeigherType.add(rbMenuTfIdfLog);
+		menuWeigherType.add(rbMenuTfIdfLog);
 
 		// Un sous menu pour choisir le type de normaliseur
 		// Par défaut c'est un tokenizer
@@ -111,6 +135,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		menuLoader.add(menuOpenStopWords);
 		menuLoader.add(menuSearcherType);
 		menuLoader.add(menuNormalizerType);
+		menuLoader.add(menuWeigherType);
 		menuLoader.add(menuLoad);
 		this.add(menuLoader);
 
@@ -119,6 +144,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
 		isModifiedIndex = true;
 		isModifiedNormalizer = true;
+		isModifiedWeigher = true;
 		isModifiedSearcher = true;
 		isModifiedStopWords = true;
 	}
@@ -167,6 +193,15 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public NormalizerType getNormalizerType() {
 		return normalizerType;
 	}
+	
+	/**
+	 * Retourne le type de pondérateur
+	 * 
+	 * @return le type de pondérateur
+	 */
+	public WeigherType getWeigherType() {
+		return weigherType;
+	}
 
 	/**
 	 * Retourne si l'index a été modifié
@@ -202,6 +237,15 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	 */
 	public boolean isModifiedNormalizer() {
 		return isModifiedNormalizer;
+	}
+	
+	/**
+	 * Retourne si le type de pondérateur a été modifié
+	 * 
+	 * @return true si le type de pondérateur est modifié, false sinon
+	 */
+	public boolean isModifiedWeigher() {
+		return isModifiedWeigher;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -246,6 +290,16 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			if (searcherType != SearcherType.EXTENDED_BOOLEAN)
 				isModifiedSearcher = true;
 			searcherType = SearcherType.EXTENDED_BOOLEAN;
+		}
+		// Si un type de pondérateur est sélectionné
+		else if (arg0.getSource() == rbMenuTfIdf) {
+			if (weigherType != WeigherType.TF_IDF)
+				isModifiedSearcher = true;
+			weigherType = WeigherType.TF_IDF;
+		} else if (arg0.getSource() == rbMenuTfIdfLog) {
+			if (weigherType != WeigherType.TF_IDF_LOG)
+				isModifiedSearcher = true;
+			weigherType = WeigherType.TF_IDF_LOG;
 		}
 		// Si un type de normaliseur est sélectionné
 		else if (arg0.getSource() == rbMenuTokenizer) {
