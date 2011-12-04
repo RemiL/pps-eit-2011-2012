@@ -86,9 +86,8 @@ public class IndexerMain implements ActionListener {
 				String savePath = saveFileChooser.getSelectedFile().getPath();
 				boolean useStopWords = false;
 
-				System.out.println(savePath.endsWith(".ser"));
-				if (!savePath.endsWith(".ser"))
-					savePath += ".ser";
+				if (!savePath.endsWith(".index") && !savePath.endsWith(".zindex"))
+					savePath += ".index";
 
 				try {
 					// Crée l'index
@@ -131,7 +130,7 @@ public class IndexerMain implements ActionListener {
 					System.out.println("Temps d'indexation : " + (t2 - t1) / 1000000.);
 
 					// Exporte l'index
-					index.export(savePath);
+					index.export(savePath, savePath.endsWith(".zindex"));
 
 					long t3 = System.nanoTime();
 					System.out.println("Temps de sérialisation : " + (t3 - t2) / 1000000.);
@@ -146,12 +145,13 @@ public class IndexerMain implements ActionListener {
 
 		@Override
 		public boolean accept(File f) {
-			return f.isDirectory() || f.getName().toLowerCase().endsWith(".ser");
+			return f.isDirectory() || f.getName().toLowerCase().endsWith(".index")
+					|| f.getName().toLowerCase().endsWith(".zindex");
 		}
 
 		@Override
 		public String getDescription() {
-			return "Fichiers .ser";
+			return "Fichiers d'index (.index, .zindex)";
 		}
 
 	}
