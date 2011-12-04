@@ -3,7 +3,9 @@ package searcher.vectormodel;
 import index.Document;
 import index.Index;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -40,6 +42,50 @@ public class SearcherVectorModelPrefixWordsExclusion extends SearcherVectorModel
 		super(normalizer, weigher, index);
 	}
 
+	/**
+	 * Prépare la requête en la normalisant et en remplaçant les préfixes par
+	 * les mots correspondant.
+	 * 
+	 * @param request
+	 *            la requête à préparer.
+	 * @param ignoreStopWords
+	 *            indique si les mots vides doivent être ignorés ou non dans la
+	 *            requête.
+	 * @return la requête préparée.
+	 */
+	protected LinkedList<String> prepareQuery(String request, boolean ignoreStopWords) {
+		LinkedList<String> query = new LinkedList<String>();
+		ArrayList<String> terms = normalizer.normalize(request, ignoreStopWords);
+
+		for (int i = 1; i < terms.size(); i++) {
+			// Si on a trouvé un marqueur de préfixe, on remplace
+			// le terme précédent dans la requête par tous les
+			// termes de l'index possédant ce préfixe.
+			if (terms.get(i).equals(PREFIX_MARK)) {
+				if (i > 1 && terms.get(i-2).equals(EXCLUSION_MARK)) {
+					for (String t : index.getTermsIndex(terms.get(i - 1))) {
+						query.add(EXCLUSION_MARK);
+						query.add(t);
+					}
+				} else {
+					query.addAll(index.getTermsIndex(terms.get(i - 1)));
+				}
+			} else if (!terms.get(i - 1).equals(PREFIX_MARK)) {
+				// Sinon on ajoute simplement le terme précédent
+				// si ce n'était pas un marqueur de préfixe.
+				query.add(terms.get(i - 1));
+			}
+		}
+
+		// On ajoute le dernier terme de la requête
+		// si ce n'est pas un marqueur de préfixe.
+		if (!terms.get(terms.size() - 1).equals(PREFIX_MARK)) {
+			query.add(terms.get(terms.size() - 1));
+		}
+System.out.println(query);
+		return query;
+	}
+	
 	/**
 	 * Prépare la recherche en calculant le poid des termes de la requête et sa
 	 * norme ainsi qu'en listant les documents concernés en excluant
