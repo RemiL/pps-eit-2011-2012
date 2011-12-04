@@ -185,6 +185,5 @@ public class IndexerMain implements ActionListener {
 		public String getDescription() {
 			return "Fichiers d'index (.index, .zindex)";
 		}
-
 	}
 }
