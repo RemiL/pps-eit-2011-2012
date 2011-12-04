@@ -59,7 +59,7 @@ public class FrenchStemmer extends FrenchTokenizer {
 		ArrayList<String> words = super.normalize(text, removeStopWords);
 
 		// puis on racinise.
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>(words.size());
 		for (String word : words) {
 			stemmer.setCurrent(word);
 			for (int i = REPEAT; i != 0; i--) {

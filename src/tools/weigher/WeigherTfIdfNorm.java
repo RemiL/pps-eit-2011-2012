@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Un pondérateur utilisant la méthode tf.idf normalisé selon la méthode de Fox
+ * Un pondérateur utilisant la méthode tf.idf normalisée selon la méthode de Fox
  * 1983.
  */
 public class WeigherTfIdfNorm extends WeigherTfIdf {

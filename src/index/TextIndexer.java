@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
 
-public class TextIndexer extends Indexer {
+public class TextIndexer implements Indexer {
 	static private final String URL_MARK = "URL=";
 	static private final String TITLE_MARK = "TITLE=";
 
