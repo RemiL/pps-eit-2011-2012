@@ -1,4 +1,4 @@
-package view;
+package searcher.view;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,10 +11,8 @@ public class LoaderPanel extends JPanel {
 	JTextField indexField;
 	JComboBox listSearchers;
 	JButton buttonLoad;
-	
-	
-	public LoaderPanel()
-	{
+
+	public LoaderPanel() {
 		String[] searchers = { "Modèle vectoriel basique", "Modèle vectoriel par préfixe" };
 		indexField = new JTextField(20);
 		listSearchers = new JComboBox(searchers);
@@ -28,11 +26,11 @@ public class LoaderPanel extends JPanel {
 	public JButton getButtonLoad() {
 		return buttonLoad;
 	}
-	
+
 	public String getSearcherType() {
 		return (String) listSearchers.getSelectedItem();
 	}
-	
+
 	public String getIndexPath() {
 		return indexField.getText();
 	}

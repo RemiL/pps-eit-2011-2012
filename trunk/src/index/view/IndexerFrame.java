@@ -28,6 +28,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		this.setResizable(false);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		directoryChooser = new JFileChooser(".");
@@ -64,7 +65,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 		JPanel p2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p2.add(listIndexerTypes);
 		fieldPanel.add(p2);
-		
+
 		listIndexTypes = new JComboBox(indexTypes);
 		JPanel p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p3.add(listIndexTypes);
@@ -74,7 +75,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 		JPanel p4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p4.add(listWeigherTypes);
 		fieldPanel.add(p4);
-		
+
 		listNormalizerTypes = new JComboBox(normalizerTypes);
 		JPanel p5 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p5.add(listNormalizerTypes);
@@ -102,18 +103,16 @@ public class IndexerFrame extends JFrame implements ActionListener {
 	public String getDirectoryPath() {
 		return textFieldDirectory.getText();
 	}
-	
+
 	public String getStopWordsPath() {
 		return textFieldStopWords.getText();
 	}
-	
-	public String getIndexerType()
-	{
+
+	public String getIndexerType() {
 		return (String) listIndexerTypes.getSelectedItem();
 	}
-	
-	public String getWeigherType()
-	{
+
+	public String getWeigherType() {
 		return (String) listWeigherTypes.getSelectedItem();
 	}
 

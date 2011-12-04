@@ -1,4 +1,4 @@
-package view;
+package searcher.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -101,10 +101,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		indexPath = "";
 		stopWordsPath = "";
 
-		isModifiedIndex = false;
-		isModifiedNormalizer = false;
-		isModifiedSearcher = false;
-		isModifiedStopWords = false;
+		isModifiedIndex = true;
+		isModifiedNormalizer = true;
+		isModifiedSearcher = true;
+		isModifiedStopWords = true;
 	}
 
 	public JMenuItem getMenuLoad() {
@@ -149,16 +149,13 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			if (retval == JFileChooser.APPROVE_OPTION) {
 				indexPath = indexFileChooser.getSelectedFile().getPath();
 				isModifiedIndex = true;
-				if (!stopWordsPath.equals(""))
-					menuLoad.setEnabled(true);
+				menuLoad.setEnabled(true);
 			}
 		} else if (arg0.getSource() == menuOpenStopWords) {
 			int retval = stopWordsFileChooser.showOpenDialog(MenuBar.this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
 				stopWordsPath = stopWordsFileChooser.getSelectedFile().getPath();
 				isModifiedStopWords = true;
-				if (!indexPath.equals(""))
-					menuLoad.setEnabled(true);
 			}
 		} else if (arg0.getSource() == menuLoad) {
 			isModifiedIndex = false;

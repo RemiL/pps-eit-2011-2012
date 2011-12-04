@@ -1,4 +1,4 @@
-package view;
+package searcher.view;
 
 import java.awt.Dimension;
 
