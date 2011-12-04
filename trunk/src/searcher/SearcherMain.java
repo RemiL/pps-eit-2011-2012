@@ -99,6 +99,8 @@ public class SearcherMain implements ActionListener {
 
 					long t2 = System.nanoTime();
 					System.out.println("Temps de désérialisation : " + (t2 - t1) / 1000000.);
+					
+					System.out.println("Nombre de termes indexés : " + index.getTermsIndex().size());
 				}
 
 				// Si un des paramètres est modifié, il faut recréer le searcher

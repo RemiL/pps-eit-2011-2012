@@ -6,8 +6,14 @@ import java.util.ArrayList;
 import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
 
-// TODO : transformer cette classe en interface ?
-public abstract class Indexer {
+/**
+ * Interface d'un indexeur générique capable de remplir un index fourni sans en
+ * connaitre l’implémentation exacte à partir d’une liste de documents à
+ * indexer, d’un normalisateur et d’un pondérateur et de l’information sur la
+ * suppression ou non des mots vides et de l'encodage à utiliser
+ * prioritairement.
+ */
+public interface Indexer {
 	/**
 	 * Indexe les documents dont la liste est fournie pour remplir l'index. Le
 	 * normalisateur et le pondérateur fournis sont utilisés et les mots vides
