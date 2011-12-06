@@ -49,7 +49,7 @@ public class SearcherVectorModel extends Searcher {
 
 		// Prépare la recherche.
 		double normQuery = setupSearch(wordsQuery, weightsQuery, docs);
-
+		System.out.println(wordsQuery);
 		// Calcule les résultats pour chaque document.
 		populateResults(results, wordsQuery, weightsQuery, normQuery, docs);
 

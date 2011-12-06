@@ -51,7 +51,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 		String[] indexerTypes = { "Indexer de texte" };
 		String[] indexTypes = { "IndexHash", "IndexTree" };
-		String[] weigherTypes = { "Tf.Idf", "Tf.Idf avec log(Tf)", "Tf.Idf normalisé" };
+		String[] weigherTypes = { "Tf.Idf", "Tf.Idf avec log(Tf)", "Tf.Idf normalisé", "Tf.Idf avec log(Tf) normalisé" };
 		String[] normalizerTypes = { "Tokenizer", "Stemmer" };
 
 		labelPanel.add(new JLabel("Répertoire à indexer : ", JLabel.RIGHT));
@@ -107,6 +107,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le bouton de sauvegarde
+	 * 
 	 * @return le bouton de sauvegarde
 	 */
 	public JButton getButtonSave() {
@@ -115,6 +116,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le chemin du répertoire à indexer
+	 * 
 	 * @return le chemin du répertoire à indexer
 	 */
 	public String getDirectoryPath() {
@@ -123,6 +125,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le chemin du fichier des mots vides
+	 * 
 	 * @return le chemin du fichier des mots vides
 	 */
 	public String getStopWordsPath() {
@@ -131,6 +134,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le type d'indexer
+	 * 
 	 * @return le type d'indexer
 	 */
 	public String getIndexerType() {
@@ -139,6 +143,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le type de pondérateur
+	 * 
 	 * @return le type de pondérateur
 	 */
 	public String getWeigherType() {
@@ -147,6 +152,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le type de normaliseur
+	 * 
 	 * @return le type de normaliseur
 	 */
 	public String getNormalizerType() {
@@ -155,6 +161,7 @@ public class IndexerFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Retourne le type d'index
+	 * 
 	 * @return le type d'index
 	 */
 	public String getIndexType() {
@@ -168,17 +175,20 @@ public class IndexerFrame extends JFrame implements ActionListener {
 			// Ouvre une boite de dialogue pour choisir le fichier
 			int retval = stopWordsFileChooser.showOpenDialog(IndexerFrame.this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
-				// Ecrit le chemin du fichier dans la zone de texte correspondante
+				// Ecrit le chemin du fichier dans la zone de texte
+				// correspondante
 				textFieldStopWords.setText(stopWordsFileChooser.getSelectedFile().getPath());
 			}
 		}
 		// Si le bouton pour ouvrir le répertoire à indexer est cliqué
 		else if (e.getSource() == buttonOpenDirectory) {
-			// Ouvre une boite de dialogue pour choisir le fichier ou le répertoire
+			// Ouvre une boite de dialogue pour choisir le fichier ou le
+			// répertoire
 			directoryChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			int retval = directoryChooser.showOpenDialog(IndexerFrame.this);
 			if (retval == JFileChooser.APPROVE_OPTION) {
-				// Ecrit le chemin du fichier dans la zone de texte correspondante
+				// Ecrit le chemin du fichier dans la zone de texte
+				// correspondante
 				textFieldDirectory.setText(directoryChooser.getSelectedFile().getPath());
 			}
 		}

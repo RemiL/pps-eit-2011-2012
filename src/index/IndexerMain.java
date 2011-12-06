@@ -17,6 +17,7 @@ import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
 import tools.weigher.WeigherTfIdf;
 import tools.weigher.WeigherTfIdfLog;
+import tools.weigher.WeigherTfIdfLogNorm;
 import tools.weigher.WeigherTfIdfNorm;
 
 /**
@@ -130,6 +131,8 @@ public class IndexerMain implements ActionListener {
 						weigher = new WeigherTfIdfLog();
 					} else if (weigherType.equals("Tf.Idf normalisé")) {
 						weigher = new WeigherTfIdfNorm();
+					} else if (weigherType.equals("Tf.Idf avec log(Tf) normalisé")) {
+						weigher = new WeigherTfIdfLogNorm();
 					}
 
 					// crée le normaliseur
