@@ -21,10 +21,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public enum SearcherType {
 		VECT_BASIC, VECT_PREFIX, VECT_PREFIX_EXCLUSION, EXTENDED_BOOLEAN
 	};
-	
+
 	/** La liste des types de pondérateur */
 	public enum WeigherType {
-		TF_IDF, TF_IDF_LOG, TF_IDF_NORM
+		TF_IDF, TF_IDF_LOG, TF_IDF_NORM, TF_IDF_LOG_NORM
 	};
 
 	/** La liste des types de normaliseur */
@@ -93,7 +93,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		rbMenuExtendedBoolean.addActionListener(this);
 		groupSearcherType.add(rbMenuExtendedBoolean);
 		menuSearcherType.add(rbMenuExtendedBoolean);
-		
+
 		// Un sous menu pour choisir le type de pondérateur
 		// Par défaut c'est le tf.idf
 		menuWeigherType = new JMenu("Type de pondérateur");
@@ -104,7 +104,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		rbMenuTfIdf.addActionListener(this);
 		groupWeigherType.add(rbMenuTfIdf);
 		menuWeigherType.add(rbMenuTfIdf);
-		
+
 		rbMenuTfIdfLog = new JRadioButtonMenuItem("tf.idf log(tf)");
 		rbMenuTfIdfLog.addActionListener(this);
 		groupWeigherType.add(rbMenuTfIdfLog);
@@ -193,7 +193,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public NormalizerType getNormalizerType() {
 		return normalizerType;
 	}
-	
+
 	/**
 	 * Retourne le type de pondérateur
 	 * 
@@ -238,7 +238,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public boolean isModifiedNormalizer() {
 		return isModifiedNormalizer;
 	}
-	
+
 	/**
 	 * Retourne si le type de pondérateur a été modifié
 	 * 

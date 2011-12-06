@@ -17,6 +17,8 @@ import tools.normalizer.Normalizer;
 import tools.weigher.Weigher;
 import tools.weigher.WeigherTfIdf;
 import tools.weigher.WeigherTfIdfLog;
+import tools.weigher.WeigherTfIdfLogNorm;
+import tools.weigher.WeigherTfIdfNorm;
 
 import searcher.view.MenuBar.WeigherType;
 import searcher.view.SearcherFrame;
@@ -78,7 +80,8 @@ public class SearcherMain implements ActionListener {
 				ignoreStopWords = true;
 
 			try {
-				// Si le type de normaliseur ou le fichier des mots vides sont modifiés
+				// Si le type de normaliseur ou le fichier des mots vides sont
+				// modifiés
 				if (searcherFrame.isModifiedNormalizer() || searcherFrame.isModifiedStopWords()) {
 					// Création du normlizer
 					switch (normalizerType) {
@@ -96,7 +99,7 @@ public class SearcherMain implements ActionListener {
 						break;
 					}
 				}
-				
+
 				if (searcherFrame.isModifiedWeigher()) {
 					// Création du pondérateur
 					switch (weigherType) {
@@ -105,6 +108,12 @@ public class SearcherMain implements ActionListener {
 						break;
 					case TF_IDF_LOG:
 						weigher = new WeigherTfIdfLog();
+						break;
+					case TF_IDF_NORM:
+						weigher = new WeigherTfIdfNorm();
+						break;
+					case TF_IDF_LOG_NORM:
+						weigher = new WeigherTfIdfLogNorm();
 						break;
 					}
 				}
@@ -117,13 +126,14 @@ public class SearcherMain implements ActionListener {
 
 					long t2 = System.nanoTime();
 					System.out.println("Temps de désérialisation : " + (t2 - t1) / 1000000.);
-					
+
 					System.out.println("Nombre de termes indexés : " + index.getTermsIndex().size());
 				}
 
 				// Si un des paramètres est modifié, il faut recréer le searcher
 				if (searcherFrame.isModifiedSearcher() || searcherFrame.isModifiedIndex()
-						|| searcherFrame.isModifiedStopWords() || searcherFrame.isModifiedNormalizer() || searcherFrame.isModifiedWeigher()) {
+						|| searcherFrame.isModifiedStopWords() || searcherFrame.isModifiedNormalizer()
+						|| searcherFrame.isModifiedWeigher()) {
 					long t1 = System.nanoTime();
 					// Création du searcher
 					switch (searcherType) {
