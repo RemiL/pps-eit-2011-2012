@@ -37,7 +37,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	private JMenuItem menuOpenIndex, menuOpenStopWords, menuLoad;
 	private JRadioButtonMenuItem rbMenuVectBasic, rbMenuVectPrefix, rbMenuVectPrefixExclusion, rbMenuExtendedBoolean;
 	private JRadioButtonMenuItem rbMenuTokenizer, rbMenuStemmer;
-	private JRadioButtonMenuItem rbMenuTfIdf, rbMenuTfIdfLog;
+	private JRadioButtonMenuItem rbMenuTfIdf, rbMenuTfIdfLog, rbMenuTfIdfNorm, rbMenuTfIdfLogNorm;
 	private JFileChooser indexFileChooser, stopWordsFileChooser;
 	private String indexPath, stopWordsPath;
 	private SearcherType searcherType;
@@ -109,6 +109,16 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		rbMenuTfIdfLog.addActionListener(this);
 		groupWeigherType.add(rbMenuTfIdfLog);
 		menuWeigherType.add(rbMenuTfIdfLog);
+		
+		rbMenuTfIdfNorm = new JRadioButtonMenuItem("tf.idf normalisé");
+		rbMenuTfIdfNorm.addActionListener(this);
+		groupWeigherType.add(rbMenuTfIdfNorm);
+		menuWeigherType.add(rbMenuTfIdfNorm);
+		
+		rbMenuTfIdfLogNorm = new JRadioButtonMenuItem("tf.idf log(tf) normalisé");
+		rbMenuTfIdfLogNorm.addActionListener(this);
+		groupWeigherType.add(rbMenuTfIdfLogNorm);
+		menuWeigherType.add(rbMenuTfIdfLogNorm);
 
 		// Un sous menu pour choisir le type de normaliseur
 		// Par défaut c'est un tokenizer
@@ -300,6 +310,14 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			if (weigherType != WeigherType.TF_IDF_LOG)
 				isModifiedSearcher = true;
 			weigherType = WeigherType.TF_IDF_LOG;
+		} else if (arg0.getSource() == rbMenuTfIdfNorm) {
+			if (weigherType != WeigherType.TF_IDF_NORM)
+				isModifiedSearcher = true;
+			weigherType = WeigherType.TF_IDF_NORM;
+		} else if (arg0.getSource() == rbMenuTfIdfLogNorm) {
+			if (weigherType != WeigherType.TF_IDF_LOG_NORM)
+				isModifiedSearcher = true;
+			weigherType = WeigherType.TF_IDF_LOG_NORM;
 		}
 		// Si un type de normaliseur est sélectionné
 		else if (arg0.getSource() == rbMenuTokenizer) {
